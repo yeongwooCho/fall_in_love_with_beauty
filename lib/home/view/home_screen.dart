@@ -1,8 +1,6 @@
-import 'package:animated_toggle_switch/animated_toggle_switch.dart';
-import 'package:badges/badges.dart' as badges;
+import 'package:fall_in_love_with_beauty/product/provider/category_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../common/const/colors.dart';
@@ -19,46 +17,26 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final products = ref.watch(productHomeRandomProvider);
-    // final productPrefer = ref.watch(productPreferProvider);
-    // final carts = ref.watch(cartProvider);
-    //
-    // final tastes = ref.watch(tasteProvider);
-
     return DefaultLayout(
       appbar: DefaultAppBar(
         title: '',
         centerTitle: true,
         leading: Padding(
-          padding: const EdgeInsets.only(left: 24.0),
-          child: Image.asset(ImagePath.logoWhite),
+          padding: const EdgeInsets.only(left: 16.0),
+          child: Image.asset(ImagePath.logoBlack),
         ),
-        leadingWidth: 120,
-        backgroundColor: MyColor.primary,
-        foregroundColor: MyColor.white,
+        leadingWidth: 140,
         action: [
-          // Padding(
-          //   padding: const EdgeInsets.only(right: 8.0),
-          //   child: IconButton(
-          //     onPressed: () {
-          //       // context.pushNamed(CartScreen.routeName);
-          //     },
-          //     icon: badges.Badge(
-          //       showBadge: carts.isNotEmpty,
-          //       badgeContent: Text(
-          //         carts.length.toString(),
-          //         style: MyTextStyle.minimumRegular.copyWith(
-          //           color: MyColor.white,
-          //           height: 1.0,
-          //         ),
-          //       ),
-          //       child: PhosphorIcon(
-          //         PhosphorIcons.shoppingCart(),
-          //         size: 28.0,
-          //       ),
-          //     ),
-          //   ),
-          // ),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: IconButton(
+              onPressed: () {},
+              icon: PhosphorIcon(
+                PhosphorIcons.bell(),
+                size: 28.0,
+              ),
+            ),
+          ),
         ],
       ),
       child: SingleChildScrollView(
@@ -67,70 +45,98 @@ class HomeScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Image.asset(ImagePath.banner),
-            const SizedBox(height: 40.0),
+            _CategoryContainer(),
+            // HorizontalItemList(products: products),
             // Padding(
-            //   padding: const EdgeInsets.only(left: 24.0),
+            //   padding: const EdgeInsets.symmetric(horizontal: 24.0),
             //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
             //     children: [
             //       Text(
-            //         '오늘은',
+            //         '인기 상품',
             //         style: MyTextStyle.bigTitleBold,
             //       ),
-            //       Padding(
-            //         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            //         child: SizedBox(
-            //           width: 110.0,
-            //           child: CustomSingleDropDown(
-            //             dropdownList: tastes,
-            //             hintText: '어떤',
-            //             onChanged: (String value) {
-            //               ref
-            //                   .read(tasteSelectedProvider.notifier)
-            //                   .update((state) => value);
-            //             },
-            //             dropdownHeight: 240.0,
+            //       TextButton(
+            //         onPressed: () {},
+            //         child: Text(
+            //           '더보기',
+            //           style: MyTextStyle.descriptionRegular.copyWith(
+            //             color: MyColor.darkGrey,
             //           ),
             //         ),
-            //       ),
-            //       Text(
-            //         '맛이 땡긴다!',
-            //         style: MyTextStyle.bigTitleBold,
             //       ),
             //     ],
             //   ),
             // ),
-            const SizedBox(height: 8.0),
-            // HorizontalItemList(products: products),
-            const SizedBox(height: 40.0),
-            Image.asset(ImagePath.bannerBand),
-            const SizedBox(height: 40.0),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '인기 상품',
-                    style: MyTextStyle.bigTitleBold,
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      '더보기',
-                      style: MyTextStyle.descriptionRegular.copyWith(
-                        color: MyColor.darkGrey,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 8.0),
+            // const SizedBox(height: 8.0),
             // HorizontalItemList(products: productPrefer),
             const SizedBox(height: 40.0),
             _Footer(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _CategoryContainer extends ConsumerWidget {
+  const _CategoryContainer({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final categories = ref.watch(categoriesProvider);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 24.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Text(
+            '카테고리',
+            style: MyTextStyle.bodyTitleMedium,
+          ),
+          const SizedBox(height: 8.0),
+          Row(
+            children: List.generate(
+              categories.length,
+              (index) => Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: index != 0 ? 4.0 : 0.0,
+                    right: index != categories.length - 1 ? 4.0 : 0.0,
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1.0,
+                        color: MyColor.middleGrey,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 12.0),
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            '${ImagePath.categoryDirectory}$index.png',
+                            height: 40.0,
+                            width: 40.0,
+                          ),
+                          const SizedBox(height: 4.0),
+                          Text(
+                            categories[index],
+                            style: MyTextStyle.minimumRegular,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

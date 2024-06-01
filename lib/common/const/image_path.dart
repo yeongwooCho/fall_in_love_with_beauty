@@ -29,4 +29,7 @@ class ImagePath {
   /// banner
   static const banner = "asset/img/banner/banner.png";
   static const bannerBand = "asset/img/banner/banner_band.png";
+
+  /// category
+  static const categoryDirectory = "asset/img/category/";
 }
