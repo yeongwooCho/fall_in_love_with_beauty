@@ -1,3 +1,4 @@
+import 'package:fall_in_love_with_beauty/common/const/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -5,7 +6,6 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../common/component/divider_container.dart';
 import '../../common/component/show/show_cupertino_alert.dart';
-import '../../common/const/colors.dart';
 import '../../common/const/image_path.dart';
 import '../../common/const/text_styles.dart';
 import '../../common/layout/default_app_bar.dart';
@@ -36,25 +36,39 @@ class ProfileScreen extends ConsumerWidget {
                 context: context,
                 user: user,
               ),
-            DividerContainer(topHeight: 20.0),
-            // ConsultingStateContainer(),
-            DividerContainer(bottomHeight: 20.0),
+            DividerContainer(topHeight: 32.0, bottomHeight: 20.0),
             renderIconAndTextButton(
               icon: PhosphorIcon(
-                PhosphorIcons.shoppingBagOpen(),
+                PhosphorIcons.userList(),
                 size: 28.0,
               ),
-              title: '주문내역',
+              title: '내 정보 관리',
               onTap: () {
-                // context.pushNamed(OrderListScreen.routeName);
+                context.pushNamed(EditProfileScreen.routeName);
               },
             ),
             renderIconAndTextButton(
               icon: PhosphorIcon(
-                PhosphorIcons.question(),
+                PhosphorIcons.calendar(),
                 size: 28.0,
               ),
-              title: '고객센터',
+              title: '예약 관리',
+              onTap: () {},
+            ),
+            renderIconAndTextButton(
+              icon: PhosphorIcon(
+                PhosphorIcons.heart(),
+                size: 28.0,
+              ),
+              title: '찜 목록',
+              onTap: () {},
+            ),
+            renderIconAndTextButton(
+              icon: PhosphorIcon(
+                PhosphorIcons.handshake(),
+                size: 28.0,
+              ),
+              title: '입점 문의',
               onTap: () {},
             ),
             renderIconAndTextButton(
@@ -100,28 +114,22 @@ class ProfileScreen extends ConsumerWidget {
             width: 72.0,
           ),
           const SizedBox(width: 16.0),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  user.name,
-                  style: MyTextStyle.bigTitleRegular,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                user.name,
+                style: MyTextStyle.bigTitleRegular,
+              ),
+              const SizedBox(height: 4.0),
+              Text(
+                user.username,
+                style: MyTextStyle.bodyRegular.copyWith(
+                  color: MyColor.darkGrey,
                 ),
-                TextButton(
-                  onPressed: () {
-                    context.pushNamed(EditProfileScreen.routeName);
-                  },
-                  child: Text(
-                    '내 정보 수정',
-                    style: MyTextStyle.descriptionRegular.copyWith(
-                      color: MyColor.primary,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),

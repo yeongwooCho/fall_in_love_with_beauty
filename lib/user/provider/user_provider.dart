@@ -21,11 +21,11 @@ class UserStateNotifier extends StateNotifier<UserModelBase> {
 
   void initItems() {
     state = UserModel(
-      id: 1,
-      email: 'tower0601@naver.com',
-      username: 'tower0601',
-      password: 'tower',
-      name: '김준혁',
+      id: 0,
+      email: 'beauty0603@naver.com',
+      username: 'beauty0603',
+      password: 'beauty0603',
+      name: '배기훈',
       phone: '01012341234',
       profileImage: ImagePath.user,
     );

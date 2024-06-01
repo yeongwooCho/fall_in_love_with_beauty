@@ -10,6 +10,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../user/view/certification_screen.dart';
 import '../../user/view/custom_sns_screen.dart';
+import '../../user/view/edit_profile_screen.dart';
 import '../../user/view/email_login_screen.dart';
 import '../../user/view/find_id_screen.dart';
 import '../../user/view/find_password_input_screen.dart';
@@ -70,9 +71,17 @@ List<RouteBase> get routes => [
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: "/profile",
+                path: '/profile',
                 name: ProfileScreen.routeName,
                 builder: (context, state) => ProfileScreen(),
+                routes: [
+                  GoRoute(
+                    parentNavigatorKey: _rootNavigatorKey,
+                    path: 'edit',
+                    name: EditProfileScreen.routeName,
+                    builder: (context, state) => EditProfileScreen(),
+                  ),
+                ],
               ),
             ],
           ),
