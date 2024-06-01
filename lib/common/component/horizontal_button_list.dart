@@ -10,7 +10,7 @@ class HorizontalButtonList extends StatefulWidget {
   const HorizontalButtonList({
     super.key,
     required this.buttons,
-    required this.initialSelectedIndex,
+    this.initialSelectedIndex = 0,
   });
 
   @override
@@ -23,7 +23,7 @@ class _HorizontalButtonListState extends State<HorizontalButtonList> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40.0,
+      height: 43.0,
       child: ListView.separated(
         padding: const EdgeInsets.only(left: 24.0, right: 24.0),
         scrollDirection: Axis.horizontal,
@@ -78,20 +78,20 @@ class _ContainerInkWell extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: 80.0,
         decoration: BoxDecoration(
+          color: isSelected ? MyColor.primary : MyColor.empty,
           border: Border.all(
             width: 1.0,
-            color: isSelected ? MyColor.primary : MyColor.text,
+            color: isSelected ? MyColor.empty : MyColor.middleGrey,
           ),
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(100.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
           child: Text(
             title,
-            style: MyTextStyle.descriptionRegular.copyWith(
-              color: isSelected ? MyColor.primary : MyColor.text,
+            style: MyTextStyle.bodyRegular.copyWith(
+              color: isSelected ? MyColor.white : null,
             ),
             textAlign: TextAlign.center,
           ),

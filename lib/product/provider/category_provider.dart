@@ -6,6 +6,7 @@ final categorySelectedProvider = StateProvider<String>(
 
 final categoriesProvider = StateProvider<List<String>>(
   (ref) => [
+    '전체',
     '미용',
     '네일',
     '(속)눈썹',

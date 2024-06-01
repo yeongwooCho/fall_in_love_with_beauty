@@ -88,7 +88,7 @@ class _CategoryContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final categories = ref.watch(categoriesProvider);
+    final categories = ref.watch(categoriesProvider).skip(1).toList();
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 24.0),
