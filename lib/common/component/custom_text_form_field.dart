@@ -99,7 +99,7 @@ class CustomTextFormField extends StatelessWidget {
       ),
       cursorColor: MyColor.primary,
       cursorHeight: 24.0,
-      style: MyTextStyle.descriptionRegular.copyWith(
+      style: MyTextStyle.bodyRegular.copyWith(
         color: enabled ? MyColor.text : MyColor.middleGrey,
       ),
       maxLength: maxLength,

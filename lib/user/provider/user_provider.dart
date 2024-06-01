@@ -12,10 +12,15 @@ class UserStateNotifier extends StateNotifier<UserModelBase> {
     initItems();
   }
 
-  void updateInfo({required String name, required String phone}) {
+  void updateInfo({
+    required String name,
+    required String phone,
+    required String email,
+  }) {
     state = (state as UserModel).copyWith(
       name: name,
       phone: phone,
+      email: email,
     );
   }
 

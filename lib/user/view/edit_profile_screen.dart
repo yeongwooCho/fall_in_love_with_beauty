@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -26,6 +27,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
   List<String> selectedDropdownItems = [];
 
@@ -37,6 +39,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       _usernameController.text = user.username;
       _nameController.text = user.name;
       _phoneController.text = user.phone;
+      _emailController.text = user.email;
     }
 
     return DefaultLayout(
@@ -56,35 +59,35 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                 const Padding(
                   padding: EdgeInsets.only(left: 4.0),
                   child: Text(
-                    '프로필 사진',
-                    style: MyTextStyle.bodyTitleMedium,
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Image.asset(
-                      ImagePath.user,
-                      width: 120.0,
-                      height: 120.0,
-                    ),
-                    const SizedBox(width: 16.0),
-                    SecondaryButton(
-                      onPressed: () {},
-                      child: Text('프로필 사진 변경'),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 40.0),
-                const Padding(
-                  padding: EdgeInsets.only(left: 4.0),
-                  child: Text(
                     '회원정보',
                     style: MyTextStyle.bodyTitleMedium,
                   ),
                 ),
                 const SizedBox(height: 8.0),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      ImagePath.user,
+                      width: 72.0,
+                      height: 72.0,
+                    ),
+                    const SizedBox(width: 8.0),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        '프로필 변경',
+                        style: MyTextStyle.descriptionRegular.copyWith(
+                          color: MyColor.primary,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const Divider(
+                  height: 40.0,
+                  color: MyColor.middleGrey,
+                ),
                 CustomTextFormField(
                   controller: _usernameController,
                   onChanged: (String? value) {},
@@ -94,12 +97,25 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   },
                   enabled: false,
                 ),
-                const SizedBox(height: 4.0),
-                Text(
-                  '아이디는 변경할 수 없습니다.',
-                  style: MyTextStyle.minimumRegular.copyWith(
-                    color: MyColor.darkGrey,
-                  ),
+                const SizedBox(height: 8.0),
+                CustomTextFormField(
+                  hintText: '비밀번호(영문, 숫자, 특수문자 합 8~15자)',
+                  onChanged: (String? value) {},
+                  onSaved: (String? value) {},
+                  validator: (String? value) {
+                    return null;
+                  },
+                  textInputType: TextInputType.text,
+                ),
+                const SizedBox(height: 8.0),
+                CustomTextFormField(
+                  hintText: '비밀번호 확인',
+                  onChanged: (String? value) {},
+                  onSaved: (String? value) {},
+                  validator: (String? value) {
+                    return null;
+                  },
+                  textInputType: TextInputType.text,
                 ),
                 const SizedBox(height: 8.0),
                 CustomTextFormField(
@@ -122,23 +138,13 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                 ),
                 const SizedBox(height: 8.0),
                 CustomTextFormField(
-                  hintText: '비밀번호(영문, 숫자, 특수문자 합 8~15자)',
+                  controller: _emailController,
                   onChanged: (String? value) {},
                   onSaved: (String? value) {},
                   validator: (String? value) {
                     return null;
                   },
-                  textInputType: TextInputType.number,
-                ),
-                const SizedBox(height: 8.0),
-                CustomTextFormField(
-                  hintText: '비밀번호 확인',
-                  onChanged: (String? value) {},
-                  onSaved: (String? value) {},
-                  validator: (String? value) {
-                    return null;
-                  },
-                  textInputType: TextInputType.number,
+                  textInputType: TextInputType.emailAddress,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
@@ -149,6 +155,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                       ref.read(userProvider.notifier).updateInfo(
                             name: _nameController.text,
                             phone: _phoneController.text,
+                            email: _emailController.text,
                           );
 
                       showCustomToast(context, msg: '저장이 완료되었습니다.');
