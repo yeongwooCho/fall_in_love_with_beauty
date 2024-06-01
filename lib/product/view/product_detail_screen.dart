@@ -1,6 +1,9 @@
 import 'package:fall_in_love_with_beauty/product/component/product_card.dart';
+import 'package:fall_in_love_with_beauty/product/provider/designer_provider.dart';
+import 'package:fall_in_love_with_beauty/product/view/designer_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../common/component/default_button.dart';
 import '../../common/component/divider_container.dart';
@@ -8,6 +11,7 @@ import '../../common/const/colors.dart';
 import '../../common/const/text_styles.dart';
 import '../../common/layout/default_app_bar.dart';
 import '../../common/layout/default_layout.dart';
+import '../component/designer_card.dart';
 import '../provider/product_provider.dart';
 
 class ProductDetailScreen extends ConsumerStatefulWidget {
@@ -32,8 +36,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final product = ref.watch(productDetailProvider(widget.id));
-
-    final fullWidth = MediaQuery.of(context).size.width;
+    final designers = ref.watch(designerProvider);
 
     return DefaultLayout(
       appbar: const DefaultAppBar(title: '뷰티샵 상세보기'),
@@ -79,6 +82,47 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
               ),
             ),
             const DividerContainer(),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    '디자이너',
+                    style: MyTextStyle.bodyTitleMedium,
+                  ),
+                  const SizedBox(height: 12.0),
+                  ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      final designer = designers[index];
+
+                      return InkWell(
+                        onTap: () {
+                          context.pushNamed(
+                            DesignerDetailScreen.routeName,
+                            pathParameters: {'id': designer.id},
+                          );
+                        },
+                        child: DesignerCard.fromModel(
+                          model: designer,
+                        ),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const Divider(
+                        height: 24.0,
+                        color: MyColor.middleGrey,
+                      );
+                    },
+                    itemCount: 3,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 100.0),
           ],
         ),
       ),
