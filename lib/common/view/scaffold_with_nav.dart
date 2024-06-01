@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
@@ -29,6 +30,9 @@ class _ScaffoldWithNavState extends State<ScaffoldWithNav> {
   int currentIndex = 0;
 
   void onTapBottomNavigation(int index) {
+    HapticFeedback.heavyImpact();
+    HapticFeedback.vibrate();
+
     final hasAlreadyOnBranch = index == widget.navigationShell.currentIndex;
     if (hasAlreadyOnBranch) {
       context.go(NAV_INDEX_ENDPOINT_MAPPER[index]!);
