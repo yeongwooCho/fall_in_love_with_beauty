@@ -1,0 +1,110 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+
+import '../const/colors.dart';
+import '../const/text_styles.dart';
+import '../layout/default_layout.dart';
+
+const Map<int, String> NAV_INDEX_ENDPOINT_MAPPER = {
+  0: '/home',
+  1: '/ai',
+  2: '/product',
+  3: '/profile'
+};
+
+class ScaffoldWithNav extends StatefulWidget {
+  final StatefulNavigationShell navigationShell;
+
+  const ScaffoldWithNav({
+    super.key,
+    required this.navigationShell,
+  });
+
+  @override
+  State<ScaffoldWithNav> createState() => _ScaffoldWithNavState();
+}
+
+class _ScaffoldWithNavState extends State<ScaffoldWithNav> {
+  int currentIndex = 0;
+
+  void onTapBottomNavigation(int index) {
+    final hasAlreadyOnBranch = index == widget.navigationShell.currentIndex;
+    if (hasAlreadyOnBranch) {
+      context.go(NAV_INDEX_ENDPOINT_MAPPER[index]!);
+    } else {
+      widget.navigationShell.goBranch(index);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _initNavigationIndex(context);
+
+    return DefaultLayout(
+      bottomNavigationBar: BottomNavigationBar(
+        elevation: 0.0,
+        backgroundColor: MyColor.white,
+        selectedItemColor: MyColor.text,
+        selectedLabelStyle: MyTextStyle.bodyBold.copyWith(fontSize: 12.0),
+        unselectedItemColor: MyColor.middleGrey,
+        unselectedFontSize: 12.0,
+        unselectedLabelStyle: MyTextStyle.bodyBold.copyWith(fontSize: 12.0),
+        type: BottomNavigationBarType.fixed,
+        currentIndex: currentIndex ?? 0,
+        onTap: onTapBottomNavigation,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: PhosphorIcon(
+              PhosphorIcons.house(),
+              size: 30.0,
+            ),
+            label: '홈',
+          ),
+          const BottomNavigationBarItem(
+            activeIcon: Text(
+              'AI',
+              style: TextStyle(
+                fontSize: 20.0,
+              ),
+            ),
+            icon: Text(
+              'AI',
+              style: TextStyle(
+                fontSize: 20.0,
+                color: MyColor.middleGrey,
+              ),
+            ),
+            label: '추천',
+          ),
+          BottomNavigationBarItem(
+            icon: PhosphorIcon(
+              PhosphorIcons.shoppingBagOpen(),
+              size: 30.0,
+            ),
+            label: '뷰티샵',
+          ),
+          BottomNavigationBarItem(
+            icon: PhosphorIcon(
+              PhosphorIcons.user(),
+              size: 30.0,
+            ),
+            label: '내 정보',
+          ),
+        ],
+      ),
+      child: widget.navigationShell,
+    );
+  }
+
+  void _initNavigationIndex(BuildContext context) {
+    final routerState = GoRouterState.of(context);
+    late int index;
+    for (final entry in NAV_INDEX_ENDPOINT_MAPPER.entries) {
+      if (routerState.fullPath!.startsWith(entry.value)) {
+        index = entry.key;
+      }
+    }
+    setState(() => currentIndex = index);
+  }
+}
