@@ -6,13 +6,17 @@ import '../../common/const/colors.dart';
 import '../../common/const/text_styles.dart';
 
 class ProductCard extends StatelessWidget {
-  final int id;
+  final String id;
   final String name;
   final String mainImageUrl;
   final double ratingPoint;
   final String hours;
   final String location;
   final bool isLike;
+
+  final bool isDetail; // 상세 페이지 여부
+
+  final String? heroKey; // 히어로 위젯 키
 
   const ProductCard({
     super.key,
@@ -23,12 +27,16 @@ class ProductCard extends StatelessWidget {
     required this.hours,
     required this.location,
     required this.isLike,
+    this.isDetail = false,
+    this.heroKey,
   });
 
   factory ProductCard.fromModel({
     required ProductModel model,
+    bool isDetail = false,
   }) {
     return ProductCard(
+      heroKey: model.id,
       id: model.id,
       name: model.name,
       mainImageUrl: model.mainImageUrl,
@@ -36,32 +44,40 @@ class ProductCard extends StatelessWidget {
       hours: model.hours,
       location: model.location,
       isLike: model.isLike,
+      isDetail: isDetail,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: MyColor.empty,
-        boxShadow: [
-          BoxShadow(
-            color: MyColor.barrier,
-            blurRadius: 12.0,
-          ),
-        ],
+        boxShadow: isDetail
+            ? []
+            : [
+                const BoxShadow(
+                  color: MyColor.barrier,
+                  blurRadius: 12.0,
+                ),
+              ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: isDetail
+            ? BorderRadius.circular(0.0)
+            : BorderRadius.circular(16.0),
         child: Container(
           color: MyColor.white,
           child: Column(
             children: [
-              Image.asset(
-                mainImageUrl,
-                fit: BoxFit.fill,
-                width: double.infinity,
-                height: 200.0,
+              Hero(
+                tag: ObjectKey(heroKey),
+                child: Image.asset(
+                  mainImageUrl,
+                  fit: BoxFit.fill,
+                  width: double.infinity,
+                  height: 200.0,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(
@@ -83,7 +99,8 @@ class ProductCard extends StatelessWidget {
                           onPressed: () {},
                           icon: isLike
                               ? PhosphorIcon(
-                                  PhosphorIcons.heart(PhosphorIconsStyle.fill),
+                                  PhosphorIcons.heart(
+                                      PhosphorIconsStyle.fill),
                                   size: 40.0,
                                   color: MyColor.primary,
                                 )

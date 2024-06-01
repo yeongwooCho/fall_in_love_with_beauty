@@ -1,5 +1,5 @@
 class ProductModel {
-  final int id;
+  final String id;
   final String name;
   final String mainImageUrl;
   final double ratingPoint;
@@ -18,7 +18,7 @@ class ProductModel {
   });
 
   ProductModel copyWith({
-    int? id,
+    String? id,
     String? name,
     String? mainImageUrl,
     double? ratingPoint,

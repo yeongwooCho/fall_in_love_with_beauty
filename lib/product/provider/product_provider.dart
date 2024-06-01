@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../model/product_model.dart';
 
-final productDetailProvider = Provider.family<ProductModel, int>((ref, id) {
+final productDetailProvider = Provider.family<ProductModel, String>((ref, id) {
   final product =
       ref.watch(productProvider).firstWhere((element) => element.id == id);
   return product;
@@ -21,11 +21,11 @@ class ProductStateNotifier extends StateNotifier<List<ProductModel>> {
   }
 
   void updateLike({
-    required int productId,
+    required String id,
     required bool isLike,
   }) {
     state = state.map((element) {
-      if (element.id == productId) {
+      if (element.id == id) {
         return element.copyWith(isLike: isLike);
       } else {
         return element;
@@ -48,7 +48,7 @@ class ProductStateNotifier extends StateNotifier<List<ProductModel>> {
     return List.generate(
       products.length,
       (index) => ProductModel(
-        id: index,
+        id: index.toString(),
         name: products[index],
         mainImageUrl: '${ImagePath.productDirectory}$index.png',
         ratingPoint: DataUtils.getRandomDouble(min: 4, range: 1),
