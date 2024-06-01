@@ -32,4 +32,7 @@ class ImagePath {
 
   /// category
   static const categoryDirectory = "asset/img/category/";
+
+  /// product
+  static const productDirectory = "asset/img/product/";
 }

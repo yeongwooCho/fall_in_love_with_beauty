@@ -30,11 +30,24 @@ class DataUtils {
     return numberFormat.format(price);
   }
 
-  static int getRandomNumber({
+  static int getRandomInt({
     required int dividerNumber,
   }) {
     final randomObj = Random();
     return randomObj.nextInt(dividerNumber);
+  }
+
+  static double getRandomDouble({
+    required int min,
+    required int range,
+  }) {
+    final randomObj = Random();
+    return (randomObj.nextDouble() + min) * range;
+  }
+
+  static bool getRandomBool() {
+    final randomObj = Random();
+    return randomObj.nextBool();
   }
 
   static List<String> getRandomId({
