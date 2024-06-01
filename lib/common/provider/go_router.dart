@@ -1,6 +1,8 @@
 import 'package:fall_in_love_with_beauty/ai/view/ai_screen.dart';
 import 'package:fall_in_love_with_beauty/common/view/scaffold_with_nav.dart';
 import 'package:fall_in_love_with_beauty/home/view/home_screen.dart';
+import 'package:fall_in_love_with_beauty/notification/view/notification_detail_screen.dart';
+import 'package:fall_in_love_with_beauty/notification/view/notification_screen.dart';
 import 'package:fall_in_love_with_beauty/product/view/product_screen.dart';
 import 'package:fall_in_love_with_beauty/user/view/profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -161,6 +163,23 @@ List<RouteBase> get routes => [
               ),
             ],
           )
+        ],
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        path: '/notification',
+        name: NotificationScreen.routeName,
+        builder: (context, state) => NotificationScreen(),
+        routes: [
+          GoRoute(
+            parentNavigatorKey: _rootNavigatorKey,
+            path: ':id',
+            name: NotificationDetailScreen.routeName,
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              return NotificationDetailScreen(id: id);
+            },
+          ),
         ],
       ),
 

@@ -1,6 +1,8 @@
+import 'package:fall_in_love_with_beauty/notification/view/notification_screen.dart';
 import 'package:fall_in_love_with_beauty/product/provider/category_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../common/const/colors.dart';
@@ -30,7 +32,9 @@ class HomeScreen extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                context.pushNamed(NotificationScreen.routeName);
+              },
               icon: PhosphorIcon(
                 PhosphorIcons.bell(),
                 size: 28.0,
