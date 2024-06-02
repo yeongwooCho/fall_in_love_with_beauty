@@ -1,5 +1,8 @@
 import 'package:fall_in_love_with_beauty/notification/view/notification_screen.dart';
+import 'package:fall_in_love_with_beauty/product/component/horizontal_item_list.dart';
+import 'package:fall_in_love_with_beauty/product/model/product_model.dart';
 import 'package:fall_in_love_with_beauty/product/provider/category_provider.dart';
+import 'package:fall_in_love_with_beauty/product/provider/product_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -19,6 +22,8 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final products = ref.watch(productProvider);
+
     return DefaultLayout(
       appbar: DefaultAppBar(
         title: '',
@@ -49,33 +54,20 @@ class HomeScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Image.asset(ImagePath.banner),
-            _CategoryContainer(),
-            // HorizontalItemList(products: products),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Text(
-            //         '인기 상품',
-            //         style: MyTextStyle.bigTitleBold,
-            //       ),
-            //       TextButton(
-            //         onPressed: () {},
-            //         child: Text(
-            //           '더보기',
-            //           style: MyTextStyle.descriptionRegular.copyWith(
-            //             color: MyColor.darkGrey,
-            //           ),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // const SizedBox(height: 8.0),
-            // HorizontalItemList(products: productPrefer),
             const SizedBox(height: 40.0),
-            _Footer(),
+            const _CategoryContainer(),
+            const SizedBox(height: 40.0),
+            _TitleAndProductMiniCards(
+              title: '추천 뷰티샵',
+              products: products,
+            ),
+            const SizedBox(height: 40.0),
+            _TitleAndProductMiniCards(
+              title: '최근 본 뷰티샵',
+              products: products,
+            ),
+            const SizedBox(height: 60.0),
+            const _Footer(),
           ],
         ),
       ),
@@ -91,7 +83,7 @@ class _CategoryContainer extends ConsumerWidget {
     final categories = ref.watch(categoriesProvider).skip(1).toList();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 24.0),
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -142,6 +134,35 @@ class _CategoryContainer extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _TitleAndProductMiniCards extends StatelessWidget {
+  final String title;
+  final List<ProductModel> products;
+
+  const _TitleAndProductMiniCards({
+    super.key,
+    required this.title,
+    required this.products,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Text(
+            title,
+            style: MyTextStyle.bodyTitleMedium,
+          ),
+        ),
+        const SizedBox(height: 8.0),
+        HorizontalItemList(products: products),
+      ],
     );
   }
 }
