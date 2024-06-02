@@ -4,6 +4,7 @@ import 'package:fall_in_love_with_beauty/home/view/home_screen.dart';
 import 'package:fall_in_love_with_beauty/notification/view/notification_detail_screen.dart';
 import 'package:fall_in_love_with_beauty/notification/view/notification_screen.dart';
 import 'package:fall_in_love_with_beauty/product/view/designer_detail_screen.dart';
+import 'package:fall_in_love_with_beauty/product/view/like_list_screen.dart';
 import 'package:fall_in_love_with_beauty/product/view/product_detail_screen.dart';
 import 'package:fall_in_love_with_beauty/product/view/product_screen.dart';
 import 'package:fall_in_love_with_beauty/user/view/profile_screen.dart';
@@ -105,6 +106,12 @@ List<RouteBase> get routes => [
                     path: 'edit',
                     name: EditProfileScreen.routeName,
                     builder: (context, state) => EditProfileScreen(),
+                  ),
+                  GoRoute(
+                    parentNavigatorKey: _rootNavigatorKey,
+                    path: 'like_list',
+                    name: LikeListScreen.routeName,
+                    builder: (context, state) => LikeListScreen(),
                   ),
                 ],
               ),

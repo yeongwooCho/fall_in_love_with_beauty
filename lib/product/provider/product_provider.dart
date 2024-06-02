@@ -5,6 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../model/product_model.dart';
 
+final productsWithLikeProvider = Provider<List<ProductModel>>((ref) {
+  final products = ref.watch(productProvider);
+  return products.where((element) => element.isLike).toList();
+});
+
 final productDetailProvider = Provider.family<ProductModel, String>((ref, id) {
   final product =
       ref.watch(productProvider).firstWhere((element) => element.id == id);

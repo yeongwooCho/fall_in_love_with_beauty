@@ -8,6 +8,7 @@ class DesignerModel {
   final double ratingPoint;
   final String description;
   final String snsUrl;
+  final bool isLike;
 
   final List<ResultModel> results;
 
@@ -20,6 +21,7 @@ class DesignerModel {
     required this.description,
     required this.snsUrl,
     required this.results,
+    required this.isLike,
   });
 
   DesignerModel copyWith({
@@ -30,6 +32,7 @@ class DesignerModel {
     double? ratingPoint,
     String? description,
     String? snsUrl,
+    bool? isLike,
     List<ResultModel>? results,
   }) {
     return DesignerModel(
@@ -41,6 +44,7 @@ class DesignerModel {
       description: description ?? this.description,
       snsUrl: snsUrl ?? this.snsUrl,
       results: results ?? this.results,
+      isLike: isLike ?? this.isLike,
     );
   }
 }

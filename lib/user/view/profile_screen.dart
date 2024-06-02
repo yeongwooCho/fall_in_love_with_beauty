@@ -1,4 +1,5 @@
 import 'package:fall_in_love_with_beauty/common/const/colors.dart';
+import 'package:fall_in_love_with_beauty/product/view/like_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -61,7 +62,9 @@ class ProfileScreen extends ConsumerWidget {
                 size: 28.0,
               ),
               title: '찜 목록',
-              onTap: () {},
+              onTap: () {
+                context.goNamed(LikeListScreen.routeName);
+              },
             ),
             renderIconAndTextButton(
               icon: PhosphorIcon(

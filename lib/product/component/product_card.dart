@@ -1,11 +1,15 @@
 import 'package:fall_in_love_with_beauty/product/model/product_model.dart';
+import 'package:fall_in_love_with_beauty/product/provider/product_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../common/component/show/show_cupertino_alert.dart';
 import '../../common/const/colors.dart';
 import '../../common/const/text_styles.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends ConsumerWidget {
   final String id;
   final String name;
   final String mainImageUrl;
@@ -49,7 +53,7 @@ class ProductCard extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       decoration: BoxDecoration(
         color: MyColor.empty,
@@ -96,7 +100,23 @@ class ProductCard extends StatelessWidget {
                           style: MyTextStyle.bodyBold,
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            showCustomCupertinoAlert(
+                              context: context,
+                              titleWidget: Text('좋아요를 수정하시겠습니까?'),
+                              completeText: '확인',
+                              completeFunction: () {
+                                ref
+                                    .read(productProvider.notifier)
+                                    .updateLike(id: id, isLike: !isLike);
+                                context.pop();
+                              },
+                              cancelText: '취소',
+                              cancelFunction: () {
+                                context.pop();
+                              },
+                            );
+                          },
                           icon: isLike
                               ? PhosphorIcon(
                                   PhosphorIcons.heart(
