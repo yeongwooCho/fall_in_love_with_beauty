@@ -11,6 +11,7 @@ import 'package:fall_in_love_with_beauty/user/view/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../reserve/view/create_reserve_screen.dart';
 import '../../user/view/certification_screen.dart';
 import '../../user/view/custom_sns_screen.dart';
 import '../../user/view/edit_profile_screen.dart';
@@ -123,6 +124,18 @@ List<RouteBase> get routes => [
           return ScaffoldWithNav(navigationShell: navigationShell);
         },
       ),
+
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        path: '/create_reserve/:id',
+        name: CreateReserveScreen.routeName,
+        builder: (context, state) {
+          final id = state.pathParameters["id"]!;
+
+          return CreateReserveScreen(id: id);
+        },
+      ),
+
       GoRoute(
         path: '/splash',
         name: SplashScreen.routeName,

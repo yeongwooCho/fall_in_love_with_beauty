@@ -1,5 +1,6 @@
 import 'package:fall_in_love_with_beauty/product/component/product_card.dart';
 import 'package:fall_in_love_with_beauty/product/view/designer_detail_screen.dart';
+import 'package:fall_in_love_with_beauty/reserve/view/create_reserve_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -48,6 +49,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
               showCustomModalBottomSheet(
                 context: context,
                 bottomSheetWidget: ResultModalBottomSheet(
+                  productId: product.id,
                   designer: designer,
                   resultImageUrl: result.imageUrl,
                 ),
@@ -77,7 +79,12 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
           child: PrimaryButton(
-            onPressed: () {},
+            onPressed: () {
+              context.pushNamed(
+                CreateReserveScreen.routeName,
+                pathParameters: {'id': product.id},
+              );
+            },
             child: const Text('예약하기'),
           ),
         ),
