@@ -1,5 +1,4 @@
 import 'package:fall_in_love_with_beauty/product/component/product_card.dart';
-import 'package:fall_in_love_with_beauty/product/provider/designer_provider.dart';
 import 'package:fall_in_love_with_beauty/product/view/designer_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,11 +6,13 @@ import 'package:go_router/go_router.dart';
 
 import '../../common/component/default_button.dart';
 import '../../common/component/divider_container.dart';
+import '../../common/component/show/show_component_modal_bottom_sheet.dart';
 import '../../common/const/colors.dart';
 import '../../common/const/text_styles.dart';
 import '../../common/layout/default_app_bar.dart';
 import '../../common/layout/default_layout.dart';
 import '../component/designer_card.dart';
+import '../component/result_modal_bottom_sheet.dart';
 import '../provider/product_provider.dart';
 
 class ProductDetailScreen extends ConsumerStatefulWidget {
@@ -37,14 +38,34 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   Widget build(BuildContext context) {
     final product = ref.watch(productDetailProvider(widget.id));
 
-    final results = ref
-        .read(designerProvider.notifier)
-        .getResults(designers: product.designers);
+    List<Widget> results = [];
+
+    for (var designer in product.designers) {
+      for (var result in designer.results) {
+        results.add(
+          InkWell(
+            onTap: () {
+              showCustomModalBottomSheet(
+                context: context,
+                bottomSheetWidget: ResultModalBottomSheet(
+                  designer: designer,
+                  resultImageUrl: result.imageUrl,
+                ),
+              );
+            },
+            child: Image.asset(
+              result.imageUrl,
+              width: (MediaQuery.of(context).size.width - 48 - 16) / 3,
+            ),
+          ),
+        );
+      }
+    }
 
     return DefaultLayout(
       appbar: const DefaultAppBar(title: '뷰티샵 상세보기'),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           boxShadow: [
             BoxShadow(
               blurRadius: 8.0,
@@ -151,15 +172,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   Wrap(
                     spacing: 8.0,
                     runSpacing: 8.0,
-                    children: [
-                      ...results.map(
-                        (e) => Image.asset(
-                          e.imageUrl,
-                          width:
-                              (MediaQuery.of(context).size.width - 48 - 16) / 3,
-                        ),
-                      ),
-                    ],
+                    children: results,
                   )
                 ],
               ),
