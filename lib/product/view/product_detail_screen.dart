@@ -1,5 +1,4 @@
 import 'package:fall_in_love_with_beauty/product/component/product_card.dart';
-import 'package:fall_in_love_with_beauty/product/provider/designer_provider.dart';
 import 'package:fall_in_love_with_beauty/product/view/designer_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,7 +35,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final product = ref.watch(productDetailProvider(widget.id));
-    final designers = ref.watch(designerProvider);
+    // final designers = ref.watch(designerProvider);
 
     return DefaultLayout(
       appbar: const DefaultAppBar(title: '뷰티샵 상세보기'),
@@ -97,7 +96,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context, int index) {
-                      final designer = designers[index];
+                      final designer = product.designers[index];
 
                       return InkWell(
                         onTap: () {
@@ -117,7 +116,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                         color: MyColor.middleGrey,
                       );
                     },
-                    itemCount: 3,
+                    itemCount: product.designers.length,
                   ),
                 ],
               ),

@@ -1,3 +1,5 @@
+import 'designer_model.dart';
+
 class ProductModel {
   final String id;
   final String name;
@@ -7,6 +9,8 @@ class ProductModel {
   final String location;
   final bool isLike;
 
+  final List<DesignerModel> designers;
+
   ProductModel({
     required this.id,
     required this.name,
@@ -15,6 +19,7 @@ class ProductModel {
     required this.hours,
     required this.location,
     required this.isLike,
+    required this.designers,
   });
 
   ProductModel copyWith({
@@ -25,6 +30,7 @@ class ProductModel {
     String? hours,
     String? location,
     bool? isLike,
+    List<DesignerModel>? designers,
   }) {
     return ProductModel(
       id: id ?? this.id,
@@ -34,6 +40,7 @@ class ProductModel {
       hours: hours ?? this.hours,
       location: location ?? this.location,
       isLike: isLike ?? this.isLike,
+      designers: designers ?? this.designers,
     );
   }
 }

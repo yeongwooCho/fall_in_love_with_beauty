@@ -1,5 +1,6 @@
 import 'package:fall_in_love_with_beauty/common/const/image_path.dart';
 import 'package:fall_in_love_with_beauty/common/utils/data_utils.dart';
+import 'package:fall_in_love_with_beauty/product/provider/designer_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../model/product_model.dart';
@@ -12,11 +13,15 @@ final productDetailProvider = Provider.family<ProductModel, String>((ref, id) {
 
 final productProvider =
     StateNotifierProvider<ProductStateNotifier, List<ProductModel>>((ref) {
-  return ProductStateNotifier();
+  return ProductStateNotifier(ref: ref);
 });
 
 class ProductStateNotifier extends StateNotifier<List<ProductModel>> {
-  ProductStateNotifier() : super([]) {
+  final Ref ref;
+
+  ProductStateNotifier({
+    required this.ref,
+  }) : super([]) {
     state = getItems();
   }
 
@@ -45,6 +50,8 @@ class ProductStateNotifier extends StateNotifier<List<ProductModel>> {
       "허브 비프 스튜",
     ];
 
+    final designer = ref.watch(designerProvider);
+
     return List.generate(
       products.length,
       (index) => ProductModel(
@@ -55,6 +62,7 @@ class ProductStateNotifier extends StateNotifier<List<ProductModel>> {
         hours: '11:00 ~ 20:00',
         location: '서울특별시 종로구 세종대로 172',
         isLike: DataUtils.getRandomBool(),
+        designers: designer,
       ),
     );
   }
