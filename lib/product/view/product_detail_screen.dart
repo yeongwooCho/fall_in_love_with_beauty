@@ -1,4 +1,5 @@
 import 'package:fall_in_love_with_beauty/product/component/product_card.dart';
+import 'package:fall_in_love_with_beauty/product/model/designer_model.dart';
 import 'package:fall_in_love_with_beauty/product/view/designer_detail_screen.dart';
 import 'package:fall_in_love_with_beauty/reserve/view/create_reserve_screen.dart';
 import 'package:flutter/material.dart';
@@ -41,8 +42,8 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
 
     List<Widget> results = [];
 
-    for (var designer in product.designers) {
-      for (var result in designer.results) {
+    for (DesignerModel designer in product.designers) {
+      for (String result in designer.resultImageUrls) {
         results.add(
           InkWell(
             onTap: () {
@@ -51,12 +52,12 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                 bottomSheetWidget: ResultModalBottomSheet(
                   productId: product.id,
                   designer: designer,
-                  resultImageUrl: result.imageUrl,
+                  resultImageUrl: result,
                 ),
               );
             },
             child: Image.asset(
-              result.imageUrl,
+              result,
               width: (MediaQuery.of(context).size.width - 48 - 16) / 3,
             ),
           ),

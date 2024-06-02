@@ -7,6 +7,7 @@ import 'package:fall_in_love_with_beauty/product/view/designer_detail_screen.dar
 import 'package:fall_in_love_with_beauty/product/view/like_list_screen.dart';
 import 'package:fall_in_love_with_beauty/product/view/product_detail_screen.dart';
 import 'package:fall_in_love_with_beauty/product/view/product_screen.dart';
+import 'package:fall_in_love_with_beauty/reserve/view/select_kind_of_result_screen.dart';
 import 'package:fall_in_love_with_beauty/user/view/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -134,7 +135,14 @@ List<RouteBase> get routes => [
 
           return CreateReserveScreen(id: id);
         },
-      ),
+          routes: [
+            GoRoute(
+              parentNavigatorKey: _rootNavigatorKey,
+              path: 'select_kind',
+              name: SelectKindOfResultScreen.routeName,
+              builder: (context, state) => SelectKindOfResultScreen(),
+            ),
+          ]),
 
       GoRoute(
         path: '/splash',

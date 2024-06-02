@@ -6,8 +6,10 @@ import 'package:fall_in_love_with_beauty/common/const/text_styles.dart';
 import 'package:fall_in_love_with_beauty/product/component/designer_card.dart';
 import 'package:fall_in_love_with_beauty/product/provider/product_provider.dart';
 import 'package:fall_in_love_with_beauty/reserve/component/main_calendar.dart';
+import 'package:fall_in_love_with_beauty/reserve/view/select_kind_of_result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../common/layout/default_app_bar.dart';
 import '../../common/layout/default_layout.dart';
@@ -104,7 +106,12 @@ class _CreateReserveScreenState extends ConsumerState<CreateReserveScreen> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 24.0, vertical: 40.0),
               child: PrimaryButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.goNamed(
+                    SelectKindOfResultScreen.routeName,
+                    pathParameters: {'id': product.id},
+                  );
+                },
                 child: const Text('다음'),
               ),
             ),
