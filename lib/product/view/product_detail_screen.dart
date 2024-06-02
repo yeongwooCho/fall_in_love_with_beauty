@@ -1,4 +1,5 @@
 import 'package:fall_in_love_with_beauty/product/component/product_card.dart';
+import 'package:fall_in_love_with_beauty/product/provider/designer_provider.dart';
 import 'package:fall_in_love_with_beauty/product/view/designer_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,15 +36,29 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final product = ref.watch(productDetailProvider(widget.id));
-    // final designers = ref.watch(designerProvider);
+
+    final results = ref
+        .read(designerProvider.notifier)
+        .getResults(designers: product.designers);
 
     return DefaultLayout(
       appbar: const DefaultAppBar(title: '뷰티샵 상세보기'),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
-        child: PrimaryButton(
-          onPressed: () {},
-          child: const Text('예약하기'),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 8.0,
+              color: MyColor.barrier,
+            )
+          ],
+          color: MyColor.white,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+          child: PrimaryButton(
+            onPressed: () {},
+            child: const Text('예약하기'),
+          ),
         ),
       ),
       child: SingleChildScrollView(
@@ -121,7 +136,35 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 100.0),
+            const DividerContainer(),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text(
+                    '시술',
+                    style: MyTextStyle.bodyTitleMedium,
+                  ),
+                  const SizedBox(height: 12.0),
+                  Wrap(
+                    spacing: 8.0,
+                    runSpacing: 8.0,
+                    children: [
+                      ...results.map(
+                        (e) => Image.asset(
+                          e.imageUrl,
+                          width:
+                              (MediaQuery.of(context).size.width - 48 - 16) / 3,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(height: 20.0),
           ],
         ),
       ),

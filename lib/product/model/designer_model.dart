@@ -1,3 +1,5 @@
+import 'package:fall_in_love_with_beauty/product/model/result_model.dart';
+
 class DesignerModel {
   final String id;
   final String name;
@@ -7,6 +9,8 @@ class DesignerModel {
   final String description;
   final String snsUrl;
 
+  final List<ResultModel> results;
+
   DesignerModel({
     required this.id,
     required this.name,
@@ -15,6 +19,7 @@ class DesignerModel {
     required this.ratingPoint,
     required this.description,
     required this.snsUrl,
+    required this.results,
   });
 
   DesignerModel copyWith({
@@ -25,6 +30,7 @@ class DesignerModel {
     double? ratingPoint,
     String? description,
     String? snsUrl,
+    List<ResultModel>? results,
   }) {
     return DesignerModel(
       id: id ?? this.id,
@@ -34,6 +40,7 @@ class DesignerModel {
       ratingPoint: ratingPoint ?? this.ratingPoint,
       description: description ?? this.description,
       snsUrl: snsUrl ?? this.snsUrl,
+      results: results ?? this.results,
     );
   }
 }
