@@ -3,6 +3,7 @@ import 'package:fall_in_love_with_beauty/common/utils/data_utils.dart';
 import 'package:fall_in_love_with_beauty/product/provider/designer_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../model/designer_model.dart';
 import '../model/product_model.dart';
 
 final productsWithLikeProvider = Provider<List<ProductModel>>((ref) {
@@ -55,7 +56,7 @@ class ProductStateNotifier extends StateNotifier<List<ProductModel>> {
       "허브 비프 스튜",
     ];
 
-    final designer = ref.watch(designerProvider);
+    final designers = ref.read(designerWithRandomProvider);
 
     return List.generate(
       products.length,
@@ -67,34 +68,8 @@ class ProductStateNotifier extends StateNotifier<List<ProductModel>> {
         hours: '11:00 ~ 20:00',
         location: '서울특별시 종로구 세종대로 172',
         isLike: DataUtils.getRandomBool(),
-        designers: designer,
+        designers: designers,
       ),
     );
   }
 }
-
-//
-// final productHomeRandomProvider = Provider<List<ProductModel>>((ref) {
-//   final products = ref.watch(productProvider);
-//   final taste = ref.watch(tasteSelectedProvider);
-//
-//   final randomProducts =
-//   DataUtils.getRandomShuffledList<ProductModel>(products);
-//   return randomProducts;
-// });
-//
-// final productRandomProvider = Provider<List<ProductModel>>((ref) {
-//   final products = ref.watch(productProvider);
-//   final selectedCategory = ref.watch(categorySelectedProvider);
-//
-//   final randomProducts =
-//   DataUtils.getRandomShuffledList<ProductModel>(products);
-//   return randomProducts;
-// });
-//
-// final productPreferProvider = Provider<List<ProductModel>>((ref) {
-//   final products = ref.watch(productProvider);
-//
-//   final pairProducts = DataUtils.getRandomShuffledList<ProductModel>(products);
-//   return pairProducts.take(4).toList();
-// });

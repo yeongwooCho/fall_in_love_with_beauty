@@ -34,4 +34,5 @@ class ImagePath {
 
   /// product
   static const productDirectory = "asset/img/product/";
+  static const designerDirectory = "asset/img/designer/";
 }

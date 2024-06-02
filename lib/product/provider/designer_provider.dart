@@ -4,6 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../model/designer_model.dart';
 
+final designerWithRandomProvider = Provider<List<DesignerModel>>((ref) {
+  final designers = ref.watch(designerProvider);
+  final shuffledDesigners = DataUtils.getRandomShuffledList(designers);
+  return shuffledDesigners.take(3).toList();
+});
+
 final designersWithLikeProvider = Provider<List<DesignerModel>>((ref) {
   final designers = ref.watch(designerProvider);
   return designers.where((element) => element.isLike).toList();
@@ -56,13 +62,13 @@ class DesignerStateNotifier extends StateNotifier<List<DesignerModel>> {
         id: index.toString(),
         name: designers[index],
         thumbnail: '펌 전문 디자이너[12년]',
-        mainImageUrl: ImagePath.appIcon,
+        mainImageUrl: '${ImagePath.designerDirectory}$index.png',
         ratingPoint: DataUtils.getRandomDouble(min: 4, range: 1),
         description: '작은 디테일에 따라 같은 스타일도 달라보입니다. 마음으로 다가가 숨겨져있는 아름다움까지 찾아 드리는 디자이너 김소진입니다.\n\n고객님의 두상과 모질을 정확히 판단하여 고객님만의 맞춤스타일을 만들어 드리겠습니다.',
         snsUrl: 'https://www.instagram.com/hairdrop/',
         isLike: DataUtils.getRandomBool(),
         resultImageUrls: List.generate(
-          8,
+          3,
           (index) => ImagePath.appIcon,
         ),
       ),
