@@ -1,4 +1,5 @@
 import 'package:fall_in_love_with_beauty/ai/view/ai_screen.dart';
+import 'package:fall_in_love_with_beauty/ai/view/input_recommand_screen.dart';
 import 'package:fall_in_love_with_beauty/common/view/scaffold_with_nav.dart';
 import 'package:fall_in_love_with_beauty/home/view/home_screen.dart';
 import 'package:fall_in_love_with_beauty/notification/view/notification_detail_screen.dart';
@@ -61,6 +62,14 @@ List<RouteBase> get routes => [
                 path: "/ai",
                 name: AIScreen.routeName,
                 builder: (context, state) => AIScreen(),
+                routes: [
+                  GoRoute(
+                    parentNavigatorKey: _rootNavigatorKey,
+                    path: 'input_recommend',
+                    name: InputRecommendScreen.routeName,
+                    builder: (context, state) => InputRecommendScreen(),
+                  ),
+                ],
               ),
             ],
           ),
@@ -135,14 +144,15 @@ List<RouteBase> get routes => [
 
           return CreateReserveScreen(id: id);
         },
-          routes: [
-            GoRoute(
-              parentNavigatorKey: _rootNavigatorKey,
-              path: 'select_kind',
-              name: SelectKindOfResultScreen.routeName,
-              builder: (context, state) => SelectKindOfResultScreen(),
-            ),
-          ]),
+        routes: [
+          GoRoute(
+            parentNavigatorKey: _rootNavigatorKey,
+            path: 'select_kind',
+            name: SelectKindOfResultScreen.routeName,
+            builder: (context, state) => SelectKindOfResultScreen(),
+          ),
+        ],
+      ),
 
       GoRoute(
         path: '/splash',
