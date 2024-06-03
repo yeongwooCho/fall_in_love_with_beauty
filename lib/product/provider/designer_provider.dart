@@ -4,11 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../model/designer_model.dart';
 
-final designerWithRandomProvider = Provider<List<DesignerModel>>((ref) {
-  final designers = ref.watch(designerProvider);
-  final shuffledDesigners = DataUtils.getRandomShuffledList(designers);
-  return shuffledDesigners.take(3).toList();
-});
+// final designerWithRandomProvider = Provider<List<DesignerModel>>((ref) {
+//   final designers = ref.watch(designerProvider);
+//   final shuffledDesigners = DataUtils.getRandomShuffledList(designers);
+//   return shuffledDesigners.take(3).toList();
+// });
 
 final designersWithLikeProvider = Provider<List<DesignerModel>>((ref) {
   final designers = ref.watch(designerProvider);
@@ -47,13 +47,22 @@ class DesignerStateNotifier extends StateNotifier<List<DesignerModel>> {
 
   List<DesignerModel> getItems() {
     final designers = {
-      '김소진 원장': [1, 2, 3],
-      '이유진 원장': [4, 5, 6],
-      '채리 원장': [7, 8],
-      '유빈 실장': [9, 10],
-      "하율 디자이너": [11],
-      "김유지 실장": [12, 13],
-      "이상현 실장": [14],
+      '김소진 원장': [0, 1],
+      '이유진 원장': [3, 4],
+      '채리 원장': [5],
+      '유빈 실장': [6],
+      "하율 디자이너": [7, 8],
+      "김유지 실장": [9],
+      "이상현 실장": [10, 11],
+      "김진 실장": [12, 13],
+      "김유진 실장": [14, 2],
+      "박혜린 실장": [1, 2, 3],
+      "주빈 디자이너": [4, 5, 6],
+      "혜린 실장": [7],
+      "민지 원장": [8],
+      "소진 실장": [9],
+      "유리 실장": [10],
+      "성철 원장": [11],
     };
 
     return List.generate(

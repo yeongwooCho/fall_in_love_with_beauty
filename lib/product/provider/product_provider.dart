@@ -3,7 +3,6 @@ import 'package:fall_in_love_with_beauty/common/utils/data_utils.dart';
 import 'package:fall_in_love_with_beauty/product/provider/designer_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../model/designer_model.dart';
 import '../model/product_model.dart';
 
 final productsWithLikeProvider = Provider<List<ProductModel>>((ref) {
@@ -45,30 +44,33 @@ class ProductStateNotifier extends StateNotifier<List<ProductModel>> {
   }
 
   List<ProductModel> getItems() {
-    final products = [
-      '프레쉬 샐러드 보울',
-      '야외 핫팟 피에스타',
-      "프레쉬 야채 플래터",
-      "헬시 믹스 샐러드",
-      "비타민 가득 샐러드",
-      "그릴드 치킨 닭가슴살 샐러드",
-      "신선한 샐러드 보울",
-      "허브 비프 스튜",
-    ];
+    final Map<String, List<int>> products = {
+      '프레쉬 샐러드 보울': [0, 1, 2],
+      '야외 핫팟 피에스타': [3, 4],
+      "프레쉬 야채 플래터": [5, 6],
+      "헬시 믹스 샐러드": [7, 8],
+      "비타민 가득 샐러드": [9, 10],
+      "그릴드 치킨 닭가슴살 샐러드": [11, 12],
+      "신선한 샐러드 보울": [13, 14],
+      "허브 비프 스튜": [15],
+    };
 
-    final designers = ref.read(designerWithRandomProvider);
+    final designers = ref.read(designerProvider);
+    final selectedDesigners = products.values
+        .map((value) => value.map((e) => designers[e]).toList())
+        .toList();
 
     return List.generate(
       products.length,
       (index) => ProductModel(
         id: index.toString(),
-        name: products[index],
+        name: products.keys.toList()[index],
         mainImageUrl: '${ImagePath.productDirectory}$index.png',
         ratingPoint: DataUtils.getRandomDouble(min: 4, range: 1),
         hours: '11:00 ~ 20:00',
         location: '서울특별시 종로구 세종대로 172',
         isLike: DataUtils.getRandomBool(),
-        designers: designers,
+        designers: selectedDesigners[index],
       ),
     );
   }
