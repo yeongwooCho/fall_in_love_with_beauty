@@ -79,6 +79,7 @@ class ResultModalBottomSheet extends StatelessWidget {
             Expanded(
               child: Image.asset(
                 resultImageUrl,
+                fit: BoxFit.fill,
               ),
             ),
           ],
