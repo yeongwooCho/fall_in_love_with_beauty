@@ -155,6 +155,7 @@ List<RouteBase> get routes => [
       ),
 
       GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
         path: '/splash',
         name: SplashScreen.routeName,
         builder: (context, state) => SplashScreen(),
