@@ -1,5 +1,17 @@
 import 'designer_model.dart';
 
+enum CategoryStatus {
+  all('전체'),
+  beauty('미용'),
+  nail('네일'),
+  eyebrow('(속)눈썹'),
+  waxing('왁싱');
+
+  const CategoryStatus(this.label);
+
+  final String label;
+}
+
 class ProductModel {
   final String id;
   final String name;
@@ -9,6 +21,7 @@ class ProductModel {
   final String location;
   final bool isLike;
 
+  final CategoryStatus categoryStatus;
   final List<DesignerModel> designers;
 
   ProductModel({
@@ -19,6 +32,7 @@ class ProductModel {
     required this.hours,
     required this.location,
     required this.isLike,
+    required this.categoryStatus,
     required this.designers,
   });
 
@@ -30,6 +44,7 @@ class ProductModel {
     String? hours,
     String? location,
     bool? isLike,
+    CategoryStatus? categoryStatus,
     List<DesignerModel>? designers,
   }) {
     return ProductModel(
@@ -40,6 +55,7 @@ class ProductModel {
       hours: hours ?? this.hours,
       location: location ?? this.location,
       isLike: isLike ?? this.isLike,
+      categoryStatus: categoryStatus ?? this.categoryStatus,
       designers: designers ?? this.designers,
     );
   }

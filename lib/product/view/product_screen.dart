@@ -1,4 +1,5 @@
 import 'package:fall_in_love_with_beauty/common/component/horizontal_button_list.dart';
+import 'package:fall_in_love_with_beauty/product/model/product_model.dart';
 import 'package:fall_in_love_with_beauty/product/provider/category_provider.dart';
 import 'package:fall_in_love_with_beauty/product/provider/product_provider.dart';
 import 'package:fall_in_love_with_beauty/product/view/product_detail_screen.dart';
@@ -20,27 +21,33 @@ class ProductScreen extends ConsumerStatefulWidget {
 }
 
 class _ProductScreenState extends ConsumerState<ProductScreen> {
-  String selectedCategory = '';
-
   @override
   Widget build(BuildContext context) {
-    final products = ref.watch(productProvider);
-    final categories = ref.watch(categoriesProvider);
+    final products = ref.watch(productsWithCategoryProvider);
+    final selectedCategory = ref.watch(categorySelectedProvider);
 
     return DefaultLayout(
       appbar: const DefaultAppBar(title: '뷰티샵'),
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 20.0),
+            padding: const EdgeInsets.only(top: 20.0, bottom: 8.0),
             child: HorizontalButtonList(buttons: [
-              ...categories.map(
-                (e) => HorizontalButtonModel(
-                  title: e,
-                  onTap: () {},
+                ...CategoryStatus.values.map(
+                  (e) => HorizontalButtonModel(
+                    title: e.label,
+                    onTap: () {
+                      ref
+                          .read(categorySelectedProvider.notifier)
+                          .update((state) => e);
+                    },
+                  ),
                 ),
+              ],
+              initialSelectedIndex: CategoryStatus.values.indexOf(
+                selectedCategory,
               ),
-            ]),
+            ),
           ),
           Expanded(
             child: ListView.separated(

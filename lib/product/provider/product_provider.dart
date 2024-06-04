@@ -1,9 +1,24 @@
 import 'package:fall_in_love_with_beauty/common/const/image_path.dart';
 import 'package:fall_in_love_with_beauty/common/utils/data_utils.dart';
+import 'package:fall_in_love_with_beauty/product/provider/category_provider.dart';
 import 'package:fall_in_love_with_beauty/product/provider/designer_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../model/product_model.dart';
+
+final productsWithCategoryProvider = Provider<List<ProductModel>>((ref) {
+  final products = ref.watch(productProvider);
+  final selectedCategory = ref.watch(categorySelectedProvider);
+
+  if (selectedCategory == CategoryStatus.all) {
+    return products;
+  } else {
+    final productsWithCategory =
+        products.where((e) => e.categoryStatus == selectedCategory).toList();
+
+    return productsWithCategory;
+  }
+});
 
 final productsWithLikeProvider = Provider<List<ProductModel>>((ref) {
   final products = ref.watch(productProvider);
@@ -71,7 +86,25 @@ class ProductStateNotifier extends StateNotifier<List<ProductModel>> {
         location: '서울특별시 종로구 세종대로 172',
         isLike: DataUtils.getRandomBool(),
         designers: selectedDesigners[index],
+        categoryStatus: getCategoryStatus(index: index),
       ),
     );
+  }
+
+  CategoryStatus getCategoryStatus({
+    required int index,
+  }) {
+    switch (index) {
+      case >= 0 && < 4:
+        return CategoryStatus.beauty;
+      case >= 4 && < 8:
+        return CategoryStatus.nail;
+      case >= 8 && < 12:
+        return CategoryStatus.eyebrow;
+      case >= 12 && < 16:
+        return CategoryStatus.waxing;
+      default:
+        return CategoryStatus.beauty;
+    }
   }
 }

@@ -3,6 +3,7 @@ import 'package:fall_in_love_with_beauty/product/component/horizontal_item_list.
 import 'package:fall_in_love_with_beauty/product/model/product_model.dart';
 import 'package:fall_in_love_with_beauty/product/provider/category_provider.dart';
 import 'package:fall_in_love_with_beauty/product/provider/product_provider.dart';
+import 'package:fall_in_love_with_beauty/product/view/product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -80,7 +81,7 @@ class _CategoryContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final categories = ref.watch(categoriesProvider).skip(1).toList();
+    final categories = CategoryStatus.values.sublist(1);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -96,35 +97,44 @@ class _CategoryContainer extends ConsumerWidget {
             children: List.generate(
               categories.length,
               (index) => Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: index != 0 ? 4.0 : 0.0,
-                    right: index != categories.length - 1 ? 4.0 : 0.0,
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 1.0,
-                        color: MyColor.middleGrey,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
+                child: InkWell(
+                  onTap: () {
+                    ref
+                        .read(categorySelectedProvider.notifier)
+                        .update((state) => categories[index]);
+
+                    context.goNamed(ProductScreen.routeName);
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: index != 0 ? 4.0 : 0.0,
+                      right: index != categories.length - 1 ? 4.0 : 0.0,
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 12.0, horizontal: 12.0),
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            '${ImagePath.categoryDirectory}$index.png',
-                            height: 40.0,
-                            width: 40.0,
-                          ),
-                          const SizedBox(height: 4.0),
-                          Text(
-                            categories[index],
-                            style: MyTextStyle.minimumRegular,
-                          ),
-                        ],
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 1.0,
+                          color: MyColor.middleGrey,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 12.0),
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              '${ImagePath.categoryDirectory}$index.png',
+                              height: 40.0,
+                              width: 40.0,
+                            ),
+                            const SizedBox(height: 4.0),
+                            Text(
+                              categories[index].label,
+                              style: MyTextStyle.minimumRegular,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
