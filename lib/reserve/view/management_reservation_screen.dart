@@ -2,9 +2,9 @@ import 'package:fall_in_love_with_beauty/common/const/colors.dart';
 import 'package:fall_in_love_with_beauty/common/const/text_styles.dart';
 import 'package:fall_in_love_with_beauty/common/layout/default_app_bar.dart';
 import 'package:fall_in_love_with_beauty/common/layout/default_layout.dart';
-import 'package:fall_in_love_with_beauty/reserve/model/reserve_model.dart';
-import 'package:fall_in_love_with_beauty/reserve/provider/reserve_provider.dart';
-import 'package:fall_in_love_with_beauty/reserve/view/reserve_detail_screen.dart';
+import 'package:fall_in_love_with_beauty/reserve/model/reservation_model.dart';
+import 'package:fall_in_love_with_beauty/reserve/provider/reservation_provider.dart';
+import 'package:fall_in_love_with_beauty/reserve/view/reservation_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -14,14 +14,14 @@ import '../../common/component/divider_container.dart';
 import '../../common/utils/data_utils.dart';
 import '../component/reservation_card.dart';
 
-class ManagementReserveScreen extends ConsumerWidget {
+class ManagementReservationScreen extends ConsumerWidget {
   static String get routeName => 'management_reserve';
 
-  const ManagementReserveScreen({super.key});
+  const ManagementReservationScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final reservations = ref.watch(reserveProvider);
+    final reservations = ref.watch(reservationProvider);
 
     return DefaultLayout(
       appbar: const DefaultAppBar(title: '예약관리'),
@@ -50,7 +50,7 @@ class ManagementReserveScreen extends ConsumerWidget {
 }
 
 class CustomGroupedListView extends ConsumerWidget {
-  final List<ReserveModel> reservations;
+  final List<ReservationModel> reservations;
 
   const CustomGroupedListView({
     super.key,
@@ -60,7 +60,7 @@ class CustomGroupedListView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Expanded(
-      child: GroupedListView<ReserveModel, String>(
+      child: GroupedListView<ReservationModel, String>(
         physics: const BouncingScrollPhysics(),
         elements: reservations,
         groupBy: (element) => DataUtils.convertDateTimeToDateTimeString(
@@ -81,11 +81,11 @@ class CustomGroupedListView extends ConsumerWidget {
             ),
           ],
         ),
-        itemBuilder: (context, ReserveModel element) {
+        itemBuilder: (context, ReservationModel element) {
           return InkWell(
             onTap: () {
               context.pushNamed(
-                ReserveDetailScreen.routeName,
+                ReservationDetailScreen.routeName,
                 pathParameters: {'id': element.id},
               );
             },

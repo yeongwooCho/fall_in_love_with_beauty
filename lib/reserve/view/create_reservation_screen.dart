@@ -15,22 +15,23 @@ import '../../common/layout/default_app_bar.dart';
 import '../../common/layout/default_layout.dart';
 import '../../product/model/designer_model.dart';
 
-class CreateReserveScreen extends ConsumerStatefulWidget {
+class CreateReservationScreen extends ConsumerStatefulWidget {
   static String get routeName => "create_reserve";
 
   final String id;
 
-  const CreateReserveScreen({
+  const CreateReservationScreen({
     super.key,
     required this.id,
   });
 
   @override
-  ConsumerState<CreateReserveScreen> createState() =>
-      _CreateReserveScreenState();
+  ConsumerState<CreateReservationScreen> createState() =>
+      _CreateReservationScreenState();
 }
 
-class _CreateReserveScreenState extends ConsumerState<CreateReserveScreen> {
+class _CreateReservationScreenState
+    extends ConsumerState<CreateReservationScreen> {
   DateTime selectedDate = DateTime(
     DateTime.now().year,
     DateTime.now().month,

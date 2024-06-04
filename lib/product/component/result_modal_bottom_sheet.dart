@@ -2,7 +2,7 @@ import 'package:fall_in_love_with_beauty/common/component/default_button.dart';
 import 'package:fall_in_love_with_beauty/common/const/colors.dart';
 import 'package:fall_in_love_with_beauty/common/const/text_styles.dart';
 import 'package:fall_in_love_with_beauty/product/model/designer_model.dart';
-import 'package:fall_in_love_with_beauty/reserve/view/create_reserve_screen.dart';
+import 'package:fall_in_love_with_beauty/reserve/view/create_reservation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -66,7 +66,7 @@ class ResultModalBottomSheet extends StatelessWidget {
                   SecondaryButton(
                     onPressed: () {
                       context.pushNamed(
-                        CreateReserveScreen.routeName,
+                        CreateReservationScreen.routeName,
                         pathParameters: {"id": productId},
                       );
                     },

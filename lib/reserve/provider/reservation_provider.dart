@@ -2,23 +2,24 @@ import 'package:fall_in_love_with_beauty/product/provider/designer_provider.dart
 import 'package:fall_in_love_with_beauty/product/provider/product_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../model/reserve_model.dart';
+import '../model/reservation_model.dart';
 
-final reserveDetailProvider = Provider.family<ReserveModel, String>((ref, id) {
+final reservationDetailProvider =
+    Provider.family<ReservationModel, String>((ref, id) {
   final reservation =
-      ref.watch(reserveProvider).firstWhere((element) => element.id == id);
+      ref.watch(reservationProvider).firstWhere((element) => element.id == id);
   return reservation;
 });
 
-final reserveProvider =
-    StateNotifierProvider<ReserveStateNotifier, List<ReserveModel>>(
-  (ref) => ReserveStateNotifier(ref: ref),
+final reservationProvider =
+    StateNotifierProvider<ReservationStateNotifier, List<ReservationModel>>(
+  (ref) => ReservationStateNotifier(ref: ref),
 );
 
-class ReserveStateNotifier extends StateNotifier<List<ReserveModel>> {
+class ReservationStateNotifier extends StateNotifier<List<ReservationModel>> {
   Ref ref;
 
-  ReserveStateNotifier({
+  ReservationStateNotifier({
     required this.ref,
   }) : super([]) {
     state = getItems();
@@ -30,7 +31,7 @@ class ReserveStateNotifier extends StateNotifier<List<ReserveModel>> {
     state = state.where((element) => element.id != id).toList();
   }
 
-  List<ReserveModel> getItems() {
+  List<ReservationModel> getItems() {
     final product = ref.read(
       productDetailProvider('1'),
     );
@@ -40,7 +41,7 @@ class ReserveStateNotifier extends StateNotifier<List<ReserveModel>> {
 
     return List.generate(
       20,
-      (index) => ReserveModel(
+      (index) => ReservationModel(
         id: index.toString(),
         product: product,
         designer: designer,

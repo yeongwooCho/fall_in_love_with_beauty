@@ -8,33 +8,34 @@ import 'package:fall_in_love_with_beauty/common/layout/default_layout.dart';
 import 'package:fall_in_love_with_beauty/common/utils/data_utils.dart';
 import 'package:fall_in_love_with_beauty/reserve/component/main_calendar.dart';
 import 'package:fall_in_love_with_beauty/reserve/component/reservation_card.dart';
-import 'package:fall_in_love_with_beauty/reserve/provider/reserve_provider.dart';
-import 'package:fall_in_love_with_beauty/reserve/view/management_reserve_screen.dart';
+import 'package:fall_in_love_with_beauty/reserve/provider/reservation_provider.dart';
+import 'package:fall_in_love_with_beauty/reserve/view/management_reservation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class ReserveDetailScreen extends ConsumerStatefulWidget {
+class ReservationDetailScreen extends ConsumerStatefulWidget {
   static String get routeName => 'reserve_detail';
 
   final String id;
 
-  const ReserveDetailScreen({
+  const ReservationDetailScreen({
     super.key,
     required this.id,
   });
 
   @override
-  ConsumerState<ReserveDetailScreen> createState() =>
-      _ReserveDetailScreenState();
+  ConsumerState<ReservationDetailScreen> createState() =>
+      _ReservationDetailScreenState();
 }
 
-class _ReserveDetailScreenState extends ConsumerState<ReserveDetailScreen> {
+class _ReservationDetailScreenState
+    extends ConsumerState<ReservationDetailScreen> {
   DateTime? reserveDate;
 
   @override
   Widget build(BuildContext context) {
-    final reservation = ref.watch(reserveDetailProvider(widget.id));
+    final reservation = ref.watch(reservationDetailProvider(widget.id));
     reserveDate ??= reservation.createdAt;
 
     return DefaultLayout(
@@ -110,11 +111,11 @@ class _ReserveDetailScreenState extends ConsumerState<ReserveDetailScreen> {
                             completeText: '예약취소',
                             completeFunction: () {
                               ref
-                                  .read(reserveProvider.notifier)
+                                  .read(reservationProvider.notifier)
                                   .deleteReservation(id: reservation.id);
 
-                              context
-                                  .goNamed(ManagementReserveScreen.routeName);
+                              context.goNamed(
+                                  ManagementReservationScreen.routeName);
                             },
                             cancelText: '돌아가기',
                             cancelFunction: () {

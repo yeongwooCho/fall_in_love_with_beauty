@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../common/const/text_styles.dart';
-import '../model/reserve_model.dart';
+import '../model/reservation_model.dart';
 
 class ReservationCard extends StatelessWidget {
-  final ReserveModel reservation;
+  final ReservationModel reservation;
 
   const ReservationCard({
     super.key,

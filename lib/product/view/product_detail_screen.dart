@@ -1,7 +1,7 @@
 import 'package:fall_in_love_with_beauty/product/component/product_card.dart';
 import 'package:fall_in_love_with_beauty/product/model/designer_model.dart';
 import 'package:fall_in_love_with_beauty/product/view/designer_detail_screen.dart';
-import 'package:fall_in_love_with_beauty/reserve/view/create_reserve_screen.dart';
+import 'package:fall_in_love_with_beauty/reserve/view/create_reservation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -82,7 +82,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
           child: PrimaryButton(
             onPressed: () {
               context.pushNamed(
-                CreateReserveScreen.routeName,
+                CreateReservationScreen.routeName,
                 pathParameters: {'id': product.id},
               );
             },
