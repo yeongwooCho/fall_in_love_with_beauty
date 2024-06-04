@@ -4,12 +4,15 @@ import 'package:fall_in_love_with_beauty/common/layout/default_app_bar.dart';
 import 'package:fall_in_love_with_beauty/common/layout/default_layout.dart';
 import 'package:fall_in_love_with_beauty/reserve/model/reserve_model.dart';
 import 'package:fall_in_love_with_beauty/reserve/provider/reserve_provider.dart';
+import 'package:fall_in_love_with_beauty/reserve/view/reserve_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grouped_list/grouped_list.dart';
 
 import '../../common/component/divider_container.dart';
 import '../../common/utils/data_utils.dart';
+import '../component/reservation_card.dart';
 
 class ManagementReserveScreen extends ConsumerWidget {
   static String get routeName => 'management_reserve';
@@ -81,9 +84,10 @@ class CustomGroupedListView extends ConsumerWidget {
         itemBuilder: (context, ReserveModel element) {
           return InkWell(
             onTap: () {
-              // context.pushNamed(OrderDetailScreen.routeName, pathParameters: {
-              //   'id': element.id,
-              // });
+              context.pushNamed(
+                ReserveDetailScreen.routeName,
+                pathParameters: {'id': element.id},
+              );
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -99,7 +103,7 @@ class CustomGroupedListView extends ConsumerWidget {
                       vertical: 20.0,
                     ),
                     child: ReservationCard(
-                      reserve: element,
+                      reservation: element,
                     ),
                   ),
                 ],
@@ -112,50 +116,6 @@ class CustomGroupedListView extends ConsumerWidget {
         ),
         order: GroupedListOrder.DESC,
       ),
-    );
-  }
-}
-
-class ReservationCard extends StatelessWidget {
-  final ReserveModel reserve;
-
-  const ReservationCard({
-    super.key,
-    required this.reserve,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(100.0),
-          child: Image.asset(
-            reserve.designer.mainImageUrl,
-            height: 72.0,
-            width: 72.0,
-          ),
-        ),
-        const SizedBox(width: 16.0),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                '${reserve.product.name} / ${reserve.designer.name}',
-                style: MyTextStyle.bodyTitleBold,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                '예약완료 / 러블리 디지털, 셋팅펌',
-                style: MyTextStyle.bodyRegular,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

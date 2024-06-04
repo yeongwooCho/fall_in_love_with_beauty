@@ -4,6 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../model/reserve_model.dart';
 
+final reserveDetailProvider = Provider.family<ReserveModel, String>((ref, id) {
+  final reservation =
+      ref.watch(reserveProvider).firstWhere((element) => element.id == id);
+  return reservation;
+});
+
 final reserveProvider =
     StateNotifierProvider<ReserveStateNotifier, List<ReserveModel>>(
   (ref) => ReserveStateNotifier(ref: ref),

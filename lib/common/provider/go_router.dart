@@ -15,6 +15,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../reserve/view/create_reserve_screen.dart';
 import '../../reserve/view/management_reserve_screen.dart';
+import '../../reserve/view/reserve_detail_screen.dart';
 import '../../user/view/certification_screen.dart';
 import '../../user/view/custom_sns_screen.dart';
 import '../../user/view/edit_profile_screen.dart';
@@ -130,6 +131,18 @@ List<RouteBase> get routes => [
                     path: 'management_reserve',
                     name: ManagementReserveScreen.routeName,
                     builder: (context, state) => ManagementReserveScreen(),
+                    routes: [
+                      GoRoute(
+                        parentNavigatorKey: _rootNavigatorKey,
+                        path: ':id',
+                        name: ReserveDetailScreen.routeName,
+                        builder: (context, state) {
+                          final id = state.pathParameters['id']!;
+
+                          return ReserveDetailScreen(id: id);
+                        },
+                      )
+                    ],
                   ),
                 ],
               ),
