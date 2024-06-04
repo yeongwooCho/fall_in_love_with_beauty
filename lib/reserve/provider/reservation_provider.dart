@@ -68,6 +68,7 @@ class ReservationStateNotifier extends StateNotifier<List<ReservationModel>> {
         product: product,
         designer: designer,
         createdAt: DateTime(2024, index, 15),
+        result: '남성컷 + 다운펌',
       ),
     );
   }
