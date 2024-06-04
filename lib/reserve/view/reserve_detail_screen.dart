@@ -1,6 +1,7 @@
 import 'package:fall_in_love_with_beauty/common/component/default_button.dart';
 import 'package:fall_in_love_with_beauty/common/component/divider_container.dart';
 import 'package:fall_in_love_with_beauty/common/component/horizontal_button_list.dart';
+import 'package:fall_in_love_with_beauty/common/component/show/show_cupertino_alert.dart';
 import 'package:fall_in_love_with_beauty/common/const/text_styles.dart';
 import 'package:fall_in_love_with_beauty/common/layout/default_app_bar.dart';
 import 'package:fall_in_love_with_beauty/common/layout/default_layout.dart';
@@ -8,8 +9,10 @@ import 'package:fall_in_love_with_beauty/common/utils/data_utils.dart';
 import 'package:fall_in_love_with_beauty/reserve/component/main_calendar.dart';
 import 'package:fall_in_love_with_beauty/reserve/component/reservation_card.dart';
 import 'package:fall_in_love_with_beauty/reserve/provider/reserve_provider.dart';
+import 'package:fall_in_love_with_beauty/reserve/view/management_reserve_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class ReserveDetailScreen extends ConsumerStatefulWidget {
   static String get routeName => 'reserve_detail';
@@ -100,7 +103,25 @@ class _ReserveDetailScreenState extends ConsumerState<ReserveDetailScreen> {
                   children: [
                     Expanded(
                       child: SecondaryButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showCustomCupertinoAlert(
+                            context: context,
+                            titleWidget: Text('예약을 취소하시겠습니까?'),
+                            completeText: '예약취소',
+                            completeFunction: () {
+                              ref
+                                  .read(reserveProvider.notifier)
+                                  .deleteReservation(id: reservation.id);
+
+                              context
+                                  .goNamed(ManagementReserveScreen.routeName);
+                            },
+                            cancelText: '돌아가기',
+                            cancelFunction: () {
+                              context.pop();
+                            },
+                          );
+                        },
                         child: const Text('예약 취소'),
                       ),
                     ),

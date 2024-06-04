@@ -24,6 +24,12 @@ class ReserveStateNotifier extends StateNotifier<List<ReserveModel>> {
     state = getItems();
   }
 
+  void deleteReservation({
+    required String id,
+  }) {
+    state = state.where((element) => element.id != id).toList();
+  }
+
   List<ReserveModel> getItems() {
     final product = ref.read(
       productDetailProvider('1'),
