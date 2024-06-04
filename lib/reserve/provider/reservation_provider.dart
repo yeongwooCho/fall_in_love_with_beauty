@@ -25,6 +25,28 @@ class ReservationStateNotifier extends StateNotifier<List<ReservationModel>> {
     state = getItems();
   }
 
+  void addReservation({
+    required ReservationModel reservation,
+  }) {
+    state = [
+      ...state,
+      reservation,
+    ];
+  }
+
+  void updateReservationTime({
+    required String id,
+    required DateTime createdAt,
+  }) {
+    state = state.map((e) {
+      if (e.id == id) {
+        return e.copyWith(createdAt: createdAt);
+      } else {
+        return e;
+      }
+    }).toList();
+  }
+
   void deleteReservation({
     required String id,
   }) {
