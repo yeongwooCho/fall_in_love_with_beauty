@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../reserve/view/create_reserve_screen.dart';
+import '../../reserve/view/management_reserve_screen.dart';
 import '../../user/view/certification_screen.dart';
 import '../../user/view/custom_sns_screen.dart';
 import '../../user/view/edit_profile_screen.dart';
@@ -123,6 +124,12 @@ List<RouteBase> get routes => [
                     path: 'like_list',
                     name: LikeListScreen.routeName,
                     builder: (context, state) => LikeListScreen(),
+                  ),
+                  GoRoute(
+                    parentNavigatorKey: _rootNavigatorKey,
+                    path: 'management_reserve',
+                    name: ManagementReserveScreen.routeName,
+                    builder: (context, state) => ManagementReserveScreen(),
                   ),
                 ],
               ),

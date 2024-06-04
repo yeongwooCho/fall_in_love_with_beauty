@@ -11,6 +11,7 @@ import '../../common/const/image_path.dart';
 import '../../common/const/text_styles.dart';
 import '../../common/layout/default_app_bar.dart';
 import '../../common/layout/default_layout.dart';
+import '../../reserve/view/management_reserve_screen.dart';
 import '../model/user_model.dart';
 import '../provider/user_provider.dart';
 import 'edit_profile_screen.dart';
@@ -54,7 +55,9 @@ class ProfileScreen extends ConsumerWidget {
                 size: 28.0,
               ),
               title: '예약 관리',
-              onTap: () {},
+              onTap: () {
+                context.goNamed(ManagementReserveScreen.routeName);
+              },
             ),
             renderIconAndTextButton(
               icon: PhosphorIcon(
