@@ -36,6 +36,7 @@ class ProductMiniCard extends StatelessWidget {
             Image.asset(
               product.mainImageUrl,
               fit: BoxFit.cover,
+              height: 105,
             ),
             Container(
               height: 115.0,
