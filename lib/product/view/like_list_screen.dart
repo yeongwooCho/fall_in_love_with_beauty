@@ -13,6 +13,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../common/layout/default_app_bar.dart';
 import '../../common/layout/default_layout.dart';
+import '../../user/provider/user_provider.dart';
 import '../component/product_card.dart';
 
 class LikeListScreen extends ConsumerStatefulWidget {
@@ -71,6 +72,11 @@ class _LikeListScreenState extends ConsumerState<LikeListScreen> {
 
                       return InkWell(
                         onTap: () {
+                          ref
+                              .read(userProvider.notifier)
+                              .updateRecentlyViewedItems(
+                                  recentlyViewedItem: product.id);
+
                           context.pushNamed(
                             ProductDetailScreen.routeName,
                             pathParameters: {'id': product.id},

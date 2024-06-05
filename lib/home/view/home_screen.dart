@@ -4,6 +4,8 @@ import 'package:fall_in_love_with_beauty/product/model/product_model.dart';
 import 'package:fall_in_love_with_beauty/product/provider/category_provider.dart';
 import 'package:fall_in_love_with_beauty/product/provider/product_provider.dart';
 import 'package:fall_in_love_with_beauty/product/view/product_screen.dart';
+import 'package:fall_in_love_with_beauty/user/model/user_model.dart';
+import 'package:fall_in_love_with_beauty/user/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -24,6 +26,12 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final products = ref.watch(productProvider);
+    final recentlyViewedItems = (ref.watch(userProvider) as UserModel)
+        .recentlyViewedItems
+        .map((e) => ref.read(productDetailProvider(e)))
+        .toList()
+        .reversed
+        .toList();
 
     return DefaultLayout(
       appbar: DefaultAppBar(
@@ -65,7 +73,7 @@ class HomeScreen extends ConsumerWidget {
             const SizedBox(height: 40.0),
             _TitleAndProductMiniCards(
               title: '최근 본 뷰티샵',
-              products: products,
+              products: recentlyViewedItems,
             ),
             const SizedBox(height: 60.0),
             const _Footer(),

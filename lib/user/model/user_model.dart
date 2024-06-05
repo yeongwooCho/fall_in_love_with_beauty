@@ -18,6 +18,7 @@ class UserModel extends UserModelBase {
   final String name;
   final String phone;
   final String profileImage;
+  final List<String> recentlyViewedItems;
 
   UserModel({
     required this.id,
@@ -27,6 +28,7 @@ class UserModel extends UserModelBase {
     required this.name,
     required this.phone,
     required this.profileImage,
+    required this.recentlyViewedItems,
   });
 
   UserModel copyWith({
@@ -37,6 +39,7 @@ class UserModel extends UserModelBase {
     String? name,
     String? phone,
     String? profileImage,
+    List<String>? recentlyViewedItems,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -46,6 +49,7 @@ class UserModel extends UserModelBase {
       name: name ?? this.name,
       phone: phone ?? this.phone,
       profileImage: profileImage ?? this.profileImage,
+      recentlyViewedItems: recentlyViewedItems ?? this.recentlyViewedItems,
     );
   }
 }

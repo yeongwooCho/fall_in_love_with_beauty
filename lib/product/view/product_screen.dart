@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../common/layout/default_app_bar.dart';
 import '../../common/layout/default_layout.dart';
+import '../../user/provider/user_provider.dart';
 import '../component/product_card.dart';
 
 class ProductScreen extends ConsumerStatefulWidget {
@@ -59,6 +60,9 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
 
                 return InkWell(
                   onTap: () {
+                    ref.read(userProvider.notifier).updateRecentlyViewedItems(
+                        recentlyViewedItem: product.id);
+
                     context.pushNamed(
                       ProductDetailScreen.routeName,
                       pathParameters: {'id': product.id},
