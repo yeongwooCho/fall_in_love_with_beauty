@@ -13,6 +13,7 @@ import 'package:fall_in_love_with_beauty/user/view/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../home/view/map_screen.dart';
 import '../../reserve/view/create_reservation_screen.dart';
 import '../../reserve/view/management_reservation_screen.dart';
 import '../../reserve/view/reservation_detail_screen.dart';
@@ -55,6 +56,14 @@ List<RouteBase> get routes => [
                 path: "/home",
                 name: HomeScreen.routeName,
                 builder: (context, state) => HomeScreen(),
+                routes: [
+                  GoRoute(
+                    parentNavigatorKey: _rootNavigatorKey,
+                    path: "map",
+                    name: MapScreen.routeName,
+                    builder: (context, state) => MapScreen(),
+                  ),
+                ],
               ),
             ],
           ),

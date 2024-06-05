@@ -1,3 +1,4 @@
+import 'package:fall_in_love_with_beauty/home/view/map_screen.dart';
 import 'package:fall_in_love_with_beauty/notification/view/notification_screen.dart';
 import 'package:fall_in_love_with_beauty/product/component/horizontal_item_list.dart';
 import 'package:fall_in_love_with_beauty/product/model/product_model.dart';
@@ -34,6 +35,17 @@ class HomeScreen extends ConsumerWidget {
         .toList();
 
     return DefaultLayout(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.pushNamed(MapScreen.routeName);
+        },
+        child: PhosphorIcon(
+          PhosphorIcons.mapPinArea(),
+          size: 32.0,
+        ),
+        backgroundColor: MyColor.primary,
+        foregroundColor: MyColor.white,
+      ),
       appbar: DefaultAppBar(
         title: '',
         centerTitle: true,

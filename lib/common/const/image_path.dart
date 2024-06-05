@@ -5,12 +5,6 @@ class ImagePath {
   static const logoBlack = "asset/img/logo/logo_black.png";
   static const serviceImage = "asset/img/logo/service.png";
 
-  /// concept
-  static const concept = "asset/img/concept/concept.png";
-  static const circulation = "asset/img/concept/circulation.png";
-  static const manufacturing = "asset/img/concept/manufacturing.png";
-  static const map = "asset/img/concept/map.png";
-
   /// social_login button
   static const appleIcon = "asset/img/social_login/button/apple.png";
   static const googleIcon = "asset/img/social_login/button/google.png";
@@ -36,4 +30,7 @@ class ImagePath {
   static const productDirectory = "asset/img/product/";
   static const designerDirectory = "asset/img/designer/";
   static const resultDirectory = "asset/img/result/";
+
+  /// map
+  static const map = "asset/img/map/map.png";
 }
