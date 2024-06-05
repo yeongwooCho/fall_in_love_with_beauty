@@ -7,55 +7,31 @@ import 'package:fall_in_love_with_beauty/common/layout/default_app_bar.dart';
 import 'package:fall_in_love_with_beauty/common/layout/default_layout.dart';
 import 'package:fall_in_love_with_beauty/common/utils/data_utils.dart';
 import 'package:fall_in_love_with_beauty/common/view/completion_screen.dart';
+import 'package:fall_in_love_with_beauty/reserve/provider/reservation_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-class SelectKindOfResultScreen extends StatefulWidget {
+import '../../common/const/data.dart';
+
+class SelectKindOfResultScreen extends ConsumerStatefulWidget {
   static String get routeName => 'select_kind';
 
-  const SelectKindOfResultScreen({super.key});
+  final String id;
+
+  const SelectKindOfResultScreen({
+    super.key,
+    required this.id,
+  });
 
   @override
-  State<SelectKindOfResultScreen> createState() =>
+  ConsumerState<SelectKindOfResultScreen> createState() =>
       _SelectKindOfResultScreenState();
 }
 
-class _SelectKindOfResultScreenState extends State<SelectKindOfResultScreen> {
-  final Map<String, Map<String, int>> kindOfResult = {
-    '커트': {
-      '디자인컷 + 두피스케일링': 90000,
-      '남자 인생 커트': 20000,
-      '여자 인생 커트': 30000,
-      '디자인 컷 + 앞머리펌': 40000,
-      '커트 + 뿌리볼륨펌': 50000,
-      '커트 + 옆머리다운펌': 45000,
-      '커트 + 옆,뒷머리다운펌': 55000
-    },
-    '펌': {
-      '남성컷 + 다운펌': 45000,
-      '뿌리 볼륨펌': 60000,
-      'C컬펌': 80000,
-      '히피펌': 80000,
-      '셋팅열펌': 90000
-    },
-    '염색': {
-      '전체염색 + 트리트먼트': 120000,
-      '뿌리염색 + 커트': 90000,
-      '뿌리탈색': 80000,
-      '복구염색': 92000,
-      '리터치': 77000
-    },
-    '클리닉': {'베이직케어': 30000, '클래식케어': 34000, '스폐셜큐어': 47000, '프리미엄 헤드스파': 66000},
-    '스타일링': {
-      '자신감 넘치는 남자 스타일링': 30000,
-      '아이롱 드라이': 45000,
-      '브로우 드라이': 66000,
-      '붙임머리': 54000,
-      '릴렉싱샴푸': 24000
-    },
-  };
-
+class _SelectKindOfResultScreenState
+    extends ConsumerState<SelectKindOfResultScreen> {
   String selectedKey = '커트';
   String selectedValue = '';
 
@@ -126,6 +102,11 @@ class _SelectKindOfResultScreenState extends State<SelectKindOfResultScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: PrimaryButton(
                 onPressed: () {
+                  ref
+                      .read(reservationProvider.notifier)
+                      .updateReservationResult(
+                          id: widget.id, result: selectedValue);
+
                   context.goNamed(
                     CompletionScreen.routeName,
                     pathParameters: {'title': "예약이\n정상적으로\n완료되었습니다."},

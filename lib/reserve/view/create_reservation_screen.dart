@@ -3,9 +3,13 @@ import 'package:fall_in_love_with_beauty/common/component/default_button.dart';
 import 'package:fall_in_love_with_beauty/common/component/divider_container.dart';
 import 'package:fall_in_love_with_beauty/common/const/colors.dart';
 import 'package:fall_in_love_with_beauty/common/const/text_styles.dart';
+import 'package:fall_in_love_with_beauty/common/utils/data_utils.dart';
 import 'package:fall_in_love_with_beauty/product/component/designer_card.dart';
+import 'package:fall_in_love_with_beauty/product/provider/designer_provider.dart';
 import 'package:fall_in_love_with_beauty/product/provider/product_provider.dart';
 import 'package:fall_in_love_with_beauty/reserve/component/main_calendar.dart';
+import 'package:fall_in_love_with_beauty/reserve/model/reservation_model.dart';
+import 'package:fall_in_love_with_beauty/reserve/provider/reservation_provider.dart';
 import 'package:fall_in_love_with_beauty/reserve/view/select_kind_of_result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,6 +44,15 @@ class _CreateReservationScreenState
     DateTime.now().minute,
     1,
   );
+  Map<String, String> selectedTime = {};
+
+  void selectedTimeCallBack(
+    Map<String, String> selectedTime,
+  ) {
+    setState(() {
+      this.selectedTime = selectedTime;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,15 +115,52 @@ class _CreateReservationScreenState
               ),
             ),
             const DividerContainer(),
-            SelectedDesignerTime(designers: product.designers),
+            SelectedDesignerTime(
+              designers: product.designers,
+              selectedTime: selectedTime,
+              onChanged: selectedTimeCallBack,
+            ),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 24.0, vertical: 40.0),
               child: PrimaryButton(
                 onPressed: () {
+                  // createdAt
+                  final hourAndMinute = selectedTime.values.first
+                      .split(':')
+                      .map((e) => int.parse(e))
+                      .toList();
+
+                  final createdAt = DateTime(
+                    selectedDate.year,
+                    selectedDate.month,
+                    selectedDate.day,
+                    hourAndMinute[0],
+                    hourAndMinute[1],
+                  );
+
+                  // designer
+                  final designer = ref.read(
+                    designerDetailProvider(selectedTime.keys.first),
+                  );
+
+                  final reservationId = DataUtils.getUuid();
+
+                  ReservationModel reservation = ReservationModel(
+                    id: reservationId,
+                    product: product,
+                    designer: designer,
+                    result: '',
+                    createdAt: createdAt,
+                  );
+
+                  ref
+                      .read(reservationProvider.notifier)
+                      .addReservation(reservation: reservation);
+
                   context.goNamed(
                     SelectKindOfResultScreen.routeName,
-                    pathParameters: {'id': product.id},
+                    pathParameters: {'id': reservationId},
                   );
                 },
                 child: const Text('다음'),
@@ -125,10 +175,14 @@ class _CreateReservationScreenState
 
 class SelectedDesignerTime extends StatefulWidget {
   final List<DesignerModel> designers;
+  final Map<String, String> selectedTime;
+  final ValueChanged<Map<String, String>> onChanged;
 
   const SelectedDesignerTime({
     super.key,
     required this.designers,
+    required this.selectedTime,
+    required this.onChanged,
   });
 
   @override
@@ -136,8 +190,6 @@ class SelectedDesignerTime extends StatefulWidget {
 }
 
 class _SelectedDesignerTimeState extends State<SelectedDesignerTime> {
-  Map<String, String> selectedTime = {};
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -170,14 +222,13 @@ class _SelectedDesignerTimeState extends State<SelectedDesignerTime> {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (_, idx) {
                       final time = getTimeList()[idx];
-                      final isSelected = selectedTime.containsKey(element.id) &&
-                          selectedTime.containsValue(time);
+                      final isSelected =
+                          widget.selectedTime.containsKey(element.id) &&
+                              widget.selectedTime.containsValue(time);
 
                       return InkWell(
                         onTap: () {
-                          setState(() {
-                            selectedTime = {element.id: time};
-                          });
+                          widget.onChanged({element.id: time});
                         },
                         child: Container(
                           decoration: BoxDecoration(

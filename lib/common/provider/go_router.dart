@@ -169,7 +169,11 @@ List<RouteBase> get routes => [
             parentNavigatorKey: _rootNavigatorKey,
             path: 'select_kind',
             name: SelectKindOfResultScreen.routeName,
-            builder: (context, state) => SelectKindOfResultScreen(),
+            builder: (context, state) {
+              final id = state.pathParameters["id"]!;
+
+              return SelectKindOfResultScreen(id: id);
+            },
           ),
         ],
       ),

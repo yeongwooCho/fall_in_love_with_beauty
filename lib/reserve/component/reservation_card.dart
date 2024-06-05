@@ -35,7 +35,7 @@ class ReservationCard extends StatelessWidget {
               ),
               const SizedBox(height: 8.0),
               Text(
-                '예약완료 / 러블리 디지털, 셋팅펌',
+                '${reservation.status} / ${reservation.result}',
                 style: MyTextStyle.bodyRegular,
                 overflow: TextOverflow.ellipsis,
               ),
