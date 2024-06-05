@@ -1,3 +1,4 @@
+import 'package:fall_in_love_with_beauty/ai/view/result_prefer_screen.dart';
 import 'package:fall_in_love_with_beauty/common/component/custom_ink_well_button.dart';
 import 'package:fall_in_love_with_beauty/common/const/colors.dart';
 import 'package:fall_in_love_with_beauty/common/const/image_path.dart';
@@ -5,6 +6,7 @@ import 'package:fall_in_love_with_beauty/common/const/text_styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../common/component/default_button.dart';
 import '../../common/layout/default_app_bar.dart';
@@ -119,7 +121,9 @@ class _InputRecommendScreenState extends State<InputRecommendScreen> {
                   isAnswerThird &&
                   isAnswerFourth)
                 PrimaryButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.goNamed(ResultPreferScreen.routeName);
+                  },
                   child: const Text('확인하기'),
                 ),
               AnimatedContainer(

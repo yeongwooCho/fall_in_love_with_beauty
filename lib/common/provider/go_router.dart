@@ -1,5 +1,6 @@
 import 'package:fall_in_love_with_beauty/ai/view/ai_screen.dart';
 import 'package:fall_in_love_with_beauty/ai/view/input_recommand_screen.dart';
+import 'package:fall_in_love_with_beauty/ai/view/result_prefer_screen.dart';
 import 'package:fall_in_love_with_beauty/common/view/scaffold_with_nav.dart';
 import 'package:fall_in_love_with_beauty/home/view/home_screen.dart';
 import 'package:fall_in_love_with_beauty/notification/view/notification_detail_screen.dart';
@@ -79,6 +80,14 @@ List<RouteBase> get routes => [
                     path: 'input_recommend',
                     name: InputRecommendScreen.routeName,
                     builder: (context, state) => InputRecommendScreen(),
+                    routes: [
+                      GoRoute(
+                        parentNavigatorKey: _rootNavigatorKey,
+                        path: 'result_prefer',
+                        name: ResultPreferScreen.routeName,
+                        builder: (context, state) => ResultPreferScreen(),
+                      ),
+                    ],
                   ),
                 ],
               ),
