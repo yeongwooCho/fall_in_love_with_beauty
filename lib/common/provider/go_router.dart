@@ -167,12 +167,12 @@ List<RouteBase> get routes => [
         routes: [
           GoRoute(
             parentNavigatorKey: _rootNavigatorKey,
-            path: 'select_kind',
+            path: ':rid',
             name: SelectKindOfResultScreen.routeName,
             builder: (context, state) {
-              final id = state.pathParameters["id"]!;
+              final rid = state.pathParameters["rid"]!;
 
-              return SelectKindOfResultScreen(id: id);
+              return SelectKindOfResultScreen(rid: rid);
             },
           ),
         ],

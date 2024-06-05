@@ -2,6 +2,7 @@ import 'package:fall_in_love_with_beauty/common/component/default_button.dart';
 import 'package:fall_in_love_with_beauty/common/component/divider_container.dart';
 import 'package:fall_in_love_with_beauty/common/component/horizontal_button_list.dart';
 import 'package:fall_in_love_with_beauty/common/component/show/show_cupertino_alert.dart';
+import 'package:fall_in_love_with_beauty/common/component/show/show_custom_toast.dart';
 import 'package:fall_in_love_with_beauty/common/const/text_styles.dart';
 import 'package:fall_in_love_with_beauty/common/layout/default_app_bar.dart';
 import 'package:fall_in_love_with_beauty/common/layout/default_layout.dart';
@@ -32,6 +33,7 @@ class ReservationDetailScreen extends ConsumerStatefulWidget {
 class _ReservationDetailScreenState
     extends ConsumerState<ReservationDetailScreen> {
   DateTime? reserveDate;
+  Duration selectedTime = Duration(hours: 11);
 
   @override
   Widget build(BuildContext context) {
@@ -87,13 +89,13 @@ class _ReservationDetailScreenState
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
                 child: HorizontalButtonList(
                   buttons: [
-                    HorizontalButtonModel(title: '11:00', onTap: () {}),
-                    HorizontalButtonModel(title: '12:00', onTap: () {}),
-                    HorizontalButtonModel(title: '13:00', onTap: () {}),
-                    HorizontalButtonModel(title: '14:00', onTap: () {}),
-                    HorizontalButtonModel(title: '15:00', onTap: () {}),
-                    HorizontalButtonModel(title: '16:00', onTap: () {}),
-                    HorizontalButtonModel(title: '17:00', onTap: () {}),
+                    ...[11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map(
+                      (e) => HorizontalButtonModel(
+                          title: '$e:00',
+                          onTap: () {
+                            selectedTime = Duration(hours: e);
+                          }),
+                    ),
                   ],
                 ),
               ),
@@ -116,6 +118,8 @@ class _ReservationDetailScreenState
 
                               context.goNamed(
                                   ManagementReservationScreen.routeName);
+
+                              showCustomToast(context, msg: '예약이 취소되었습니다.');
                             },
                             cancelText: '돌아가기',
                             cancelFunction: () {
@@ -129,7 +133,36 @@ class _ReservationDetailScreenState
                     const SizedBox(width: 8.0),
                     Expanded(
                       child: PrimaryButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          if (reserveDate != null) {
+                            showCustomCupertinoAlert(
+                              context: context,
+                              titleWidget: Text('예약을 변경하시겠습니까?'),
+                              completeText: '변경하기',
+                              completeFunction: () {
+                                final createdAt =
+                                    reserveDate!.add(selectedTime);
+                                ref
+                                    .read(reservationProvider.notifier)
+                                    .updateCreatedAt(
+                                      id: widget.id,
+                                      createdAt: createdAt,
+                                    );
+                                context.goNamed(
+                                    ManagementReservationScreen.routeName);
+
+                                showCustomToast(context, msg: '예약이 변경되었습니다.');
+                              },
+                              cancelText: '돌아가기',
+                              cancelFunction: () {
+                                context.pop();
+                              },
+                            );
+                          } else {
+                            print(reserveDate);
+                            print(selectedTime);
+                          }
+                        },
                         child: const Text('예약 변경'),
                       ),
                     ),

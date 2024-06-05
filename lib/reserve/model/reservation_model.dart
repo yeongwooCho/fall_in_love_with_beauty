@@ -1,12 +1,22 @@
 import 'package:fall_in_love_with_beauty/product/model/designer_model.dart';
 import 'package:fall_in_love_with_beauty/product/model/product_model.dart';
 
+enum ReservationStatus {
+  ready('예약중'),
+  done('예약완료'),
+  end('시술완료');
+
+  const ReservationStatus(this.label);
+
+  final String label;
+}
+
 class ReservationModel {
   final String id;
   final ProductModel product;
   final DesignerModel designer;
   final String result;
-  final String status;
+  final ReservationStatus status;
   final DateTime createdAt;
 
   ReservationModel({
@@ -14,7 +24,7 @@ class ReservationModel {
     required this.product,
     required this.designer,
     required this.result,
-    this.status = '예약완료',
+    required this.status,
     required this.createdAt,
   });
 
@@ -23,7 +33,7 @@ class ReservationModel {
     ProductModel? product,
     DesignerModel? designer,
     String? result,
-    String? status,
+    ReservationStatus? status,
     DateTime? createdAt,
   }) {
     return ReservationModel(

@@ -35,7 +35,7 @@ class ReservationCard extends StatelessWidget {
               ),
               const SizedBox(height: 8.0),
               Text(
-                '${reservation.status} / ${reservation.result}',
+                reservation.result,
                 style: MyTextStyle.bodyRegular,
                 overflow: TextOverflow.ellipsis,
               ),

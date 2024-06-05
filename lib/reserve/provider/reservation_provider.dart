@@ -42,7 +42,23 @@ class ReservationStateNotifier extends StateNotifier<List<ReservationModel>> {
   }) {
     state = state.map((e) {
       if (e.id == id) {
-        return e.copyWith(result: result);
+        return e.copyWith(
+          result: result,
+          status: ReservationStatus.done,
+        );
+      } else {
+        return e;
+      }
+    }).toList();
+  }
+
+  void updateCreatedAt({
+    required String id,
+    required DateTime createdAt,
+  }) {
+    state = state.map((e) {
+      if (e.id == id) {
+        return e.copyWith(createdAt: createdAt);
       } else {
         return e;
       }
@@ -83,6 +99,7 @@ class ReservationStateNotifier extends StateNotifier<List<ReservationModel>> {
           designer: designer,
           result: results[0],
           createdAt: DateTime(2024, randomMonth, randomDay, randomHour, 0),
+          status: ReservationStatus.end,
         );
       },
     );

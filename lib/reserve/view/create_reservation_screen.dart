@@ -152,6 +152,7 @@ class _CreateReservationScreenState
                     designer: designer,
                     result: '',
                     createdAt: createdAt,
+                    status: ReservationStatus.ready,
                   );
 
                   ref
@@ -160,7 +161,10 @@ class _CreateReservationScreenState
 
                   context.goNamed(
                     SelectKindOfResultScreen.routeName,
-                    pathParameters: {'id': reservationId},
+                    pathParameters: {
+                      'id': product.id,
+                      'rid': reservationId,
+                    },
                   );
                 },
                 child: const Text('다음'),

@@ -18,11 +18,11 @@ import '../../common/const/data.dart';
 class SelectKindOfResultScreen extends ConsumerStatefulWidget {
   static String get routeName => 'select_kind';
 
-  final String id;
+  final String rid;
 
   const SelectKindOfResultScreen({
     super.key,
-    required this.id,
+    required this.rid,
   });
 
   @override
@@ -105,7 +105,9 @@ class _SelectKindOfResultScreenState
                   ref
                       .read(reservationProvider.notifier)
                       .updateReservationResult(
-                          id: widget.id, result: selectedValue);
+                        id: widget.rid,
+                        result: selectedValue,
+                      );
 
                   context.goNamed(
                     CompletionScreen.routeName,

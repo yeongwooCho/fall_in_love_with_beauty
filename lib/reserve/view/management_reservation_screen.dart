@@ -21,7 +21,10 @@ class ManagementReservationScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final reservations = ref.watch(reservationProvider);
+    final List<ReservationModel> reservations = ref
+        .watch(reservationProvider)
+        .where((element) => element.status != ReservationStatus.ready)
+        .toList();
 
     return DefaultLayout(
       appbar: const DefaultAppBar(title: '예약관리'),
@@ -59,63 +62,87 @@ class CustomGroupedListView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Expanded(
-      child: GroupedListView<ReservationModel, String>(
-        physics: const BouncingScrollPhysics(),
-        elements: reservations,
-        groupBy: (element) => DataUtils.convertDateTimeToDateTimeString(
-          datetime: element.createdAt,
-        ),
-        groupSeparatorBuilder: (String groupByValue) => Column(
+    return GroupedListView<ReservationModel, String>(
+      physics: const BouncingScrollPhysics(),
+      elements: reservations,
+      groupBy: (element) => DataUtils.convertDateTimeToDateTimeString(
+        datetime: element.createdAt,
+      ),
+      groupSeparatorBuilder: (String groupByValue) {
+        final reservation = reservations.firstWhere((element) =>
+            DataUtils.convertDateTimeToDateTimeString(
+              datetime: element.createdAt,
+            ) ==
+            groupByValue);
+
+        return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const DividerContainer(),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-              child: Text(
-                groupByValue,
-                style: MyTextStyle.bodyRegular,
-                textAlign: TextAlign.start,
-              ),
-            ),
-          ],
-        ),
-        itemBuilder: (context, ReservationModel element) {
-          return InkWell(
-            onTap: () {
-              context.pushNamed(
-                ReservationDetailScreen.routeName,
-                pathParameters: {'id': element.id},
-              );
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Divider(
-                    height: 1.0,
-                    color: MyColor.middleGrey,
+                  Text(
+                    groupByValue,
+                    style: MyTextStyle.bodyRegular,
+                    textAlign: TextAlign.start,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 20.0,
+                  Text(
+                    reservation.status.label,
+                    style: MyTextStyle.bodyRegular.copyWith(
+                      color: reservation.status == ReservationStatus.done
+                          ? MyColor.primary
+                          : MyColor.darkGrey,
                     ),
-                    child: ReservationCard(
-                      reservation: element,
-                    ),
+                    textAlign: TextAlign.start,
                   ),
                 ],
               ),
             ),
-          );
-        },
-        itemComparator: (item1, item2) => item1.createdAt.compareTo(
-          item2.createdAt,
-        ),
-        order: GroupedListOrder.DESC,
+          ],
+        );
+      },
+      itemBuilder: (context, ReservationModel element) {
+        return InkWell(
+          onTap: element.status == ReservationStatus.done
+              ? () {
+                  if (element.status == ReservationStatus.done) {
+                    context.pushNamed(
+                      ReservationDetailScreen.routeName,
+                      pathParameters: {'id': element.id},
+                    );
+                  }
+                }
+              : null,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Divider(
+                  height: 1.0,
+                  color: MyColor.middleGrey,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 20.0,
+                  ),
+                  child: ReservationCard(
+                    reservation: element,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      itemComparator: (item1, item2) => item1.createdAt.compareTo(
+        item2.createdAt,
       ),
+      order: GroupedListOrder.DESC,
     );
   }
 }
