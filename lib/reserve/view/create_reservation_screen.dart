@@ -124,8 +124,10 @@ class _CreateReservationScreenState
               padding:
                   const EdgeInsets.symmetric(horizontal: 24.0, vertical: 40.0),
               child: PrimaryButton(
-                onPressed: () {
-                  // createdAt
+                onPressed: selectedTime.isEmpty
+                    ? null
+                    : () {
+                        // createdAt
                   final hourAndMinute = selectedTime.values.first
                       .split(':')
                       .map((e) => int.parse(e))

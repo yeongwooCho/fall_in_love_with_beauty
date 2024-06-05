@@ -101,8 +101,10 @@ class _SelectKindOfResultScreenState
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: PrimaryButton(
-                onPressed: () {
-                  ref
+                onPressed: selectedValue.isEmpty
+                    ? null
+                    : () {
+                        ref
                       .read(reservationProvider.notifier)
                       .updateReservationResult(
                         id: widget.rid,
