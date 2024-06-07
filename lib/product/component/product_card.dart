@@ -146,9 +146,24 @@ class ProductCard extends ConsumerWidget {
                       ],
                     ),
                     const SizedBox(height: 4.0),
-                    renderIconAndTitle(
-                      title: location,
-                      icon: PhosphorIcons.mapPinArea(),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        PhosphorIcon(
+                          PhosphorIcons.mapPinArea(),
+                          size: 24.0,
+                          color: MyColor.primary,
+                        ),
+                        const SizedBox(width: 4.0),
+                        Expanded(
+                          child: Text(
+                            location,
+                            style: MyTextStyle.descriptionRegular.copyWith(
+                              color: MyColor.darkGrey,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
