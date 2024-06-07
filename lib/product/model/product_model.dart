@@ -19,6 +19,7 @@ class ProductModel {
   final double ratingPoint;
   final String hours;
   final String location;
+  final String description;
   final bool isLike;
 
   final CategoryStatus categoryStatus;
@@ -32,6 +33,7 @@ class ProductModel {
     required this.hours,
     required this.location,
     required this.isLike,
+    required this.description,
     required this.categoryStatus,
     required this.designers,
   });
@@ -43,6 +45,7 @@ class ProductModel {
     double? ratingPoint,
     String? hours,
     String? location,
+    String? description,
     bool? isLike,
     CategoryStatus? categoryStatus,
     List<DesignerModel>? designers,
@@ -54,6 +57,7 @@ class ProductModel {
       ratingPoint: ratingPoint ?? this.ratingPoint,
       hours: hours ?? this.hours,
       location: location ?? this.location,
+      description: description ?? this.description,
       isLike: isLike ?? this.isLike,
       categoryStatus: categoryStatus ?? this.categoryStatus,
       designers: designers ?? this.designers,

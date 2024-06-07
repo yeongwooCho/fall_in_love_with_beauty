@@ -38,11 +38,11 @@ class DataUtils {
   }
 
   static double getRandomDouble({
-    required int min,
-    required int range,
+    required double min,
+    required double range,
   }) {
     final randomObj = Random();
-    return (randomObj.nextDouble() + min) * range;
+    return randomObj.nextDouble() * range + min;
   }
 
   static bool getRandomBool() {

@@ -116,7 +116,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   ),
                   const SizedBox(height: 12.0),
                   Text(
-                    '1:1 맞춤 헤어 컨설팅을 추구하여 특별함을 느낄 수 있는 공간에서 감각적인 디자인을 제안하고 편안한 휴식을 제공하여 고객님의 행복함을 항상 생각합니다.\n\n저희 헤어원씽만의 노하우와 트랜디한 헤어스타일로 완벽한 1:1 맞춤 헤어 컨설팅을 고객님께 선사해 드리겠습니다.\n\n매월 1,2주 일요일 휴무\n매월 3,4주 화요일 휴무',
+                    product.description,
                     style: MyTextStyle.descriptionRegular.copyWith(
                       color: MyColor.darkGrey,
                     ),
