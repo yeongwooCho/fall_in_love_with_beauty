@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../user/view/login_screen.dart';
+import '../const/colors.dart';
 import '../const/image_path.dart';
 import '../layout/default_layout.dart';
 
@@ -30,9 +31,23 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              ImagePath.appIcon,
-              width: MediaQuery.of(context).size.width * 4 / 7,
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 20.0,
+                    color: MyColor.barrier,
+                  ),
+                ],
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: Image.asset(
+                  ImagePath.appIcon,
+                  width: MediaQuery.of(context).size.width * 4 / 7,
+                ),
+              ),
             ),
             const SizedBox(height: 20.0),
             Image.asset(

@@ -40,10 +40,23 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 60.0),
-              Image.asset(
-                ImagePath.appIcon,
-                width: MediaQuery.of(context).size.width * 4 / 7,
-                height: MediaQuery.of(context).size.width * 4 / 7,
+              Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 20.0,
+                      color: MyColor.barrier,
+                    ),
+                  ],
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: Image.asset(
+                    ImagePath.appIcon,
+                    width: MediaQuery.of(context).size.width * 4 / 7,
+                  ),
+                ),
               ),
               const SizedBox(height: 40.0),
               Column(

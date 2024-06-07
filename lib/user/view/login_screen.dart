@@ -21,9 +21,23 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              ImagePath.appIcon,
-              width: MediaQuery.of(context).size.width * 4 / 7,
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 20.0,
+                    color: MyColor.barrier,
+                  ),
+                ],
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: Image.asset(
+                  ImagePath.appIcon,
+                  width: MediaQuery.of(context).size.width * 4 / 7,
+                ),
+              ),
             ),
             const SizedBox(height: 60.0),
             _renderKakaoButton(onPressed: () {
